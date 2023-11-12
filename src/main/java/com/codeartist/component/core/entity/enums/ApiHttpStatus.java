@@ -19,7 +19,7 @@ public enum ApiHttpStatus {
     private final int value;
     private final String reasonPhrase;
 
-    public static boolean in(int status) {
+    public static boolean isWarning(int status) {
         return status == CLIENT_WARNING.getValue() || status == BUSINESS_WARNING.getValue();
     }
 }

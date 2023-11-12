@@ -1,8 +1,8 @@
 package com.codeartist.component.core.support.mq.annotatioin;
 
-import com.codeartist.component.core.support.mq.bean.MqContext;
-import com.codeartist.component.core.support.mq.bean.MqHeaders;
-import com.codeartist.component.core.support.mq.bean.MqType;
+import com.codeartist.component.core.support.mq.MqContext;
+import com.codeartist.component.core.support.mq.MqHeaders;
+import com.codeartist.component.core.support.mq.MqType;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.AliasFor;
 
@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 /**
  * MQ消费者监听器注解
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/5/8
  */
 @Target({ElementType.TYPE, ElementType.METHOD})

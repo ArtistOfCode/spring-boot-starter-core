@@ -1,18 +1,14 @@
 package com.codeartist.component.core.test.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 测试类
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/8/18
  */
-@Getter
-@Setter
-@ToString
+@Data
 public class Example {
 
     private String name;

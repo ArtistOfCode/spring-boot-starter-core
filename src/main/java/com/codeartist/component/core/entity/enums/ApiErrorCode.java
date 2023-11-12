@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 接口响应枚举
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/11
  */
 @Getter

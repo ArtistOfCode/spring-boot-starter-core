@@ -1,11 +1,11 @@
-package com.codeartist.component.core.support.mq.bean;
+package com.codeartist.component.core.support.mq;
 
 import lombok.*;
 
 /**
  * MQ消息实体
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/5/8
  */
 @Getter

@@ -10,17 +10,17 @@ import java.util.Collection;
 import java.util.function.Supplier;
 
 /**
- * 业务断言
+ * 业务异常断言
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/8
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Assert {
 
-    public static void state(boolean expression, String message) {
+    public static void state(boolean expression, String message, Object... values) {
         if (expression) {
-            error(message);
+            error(message, values);
         }
     }
 
@@ -36,9 +36,9 @@ public final class Assert {
         }
     }
 
-    public static void notNull(Object object, String message) {
+    public static void notNull(Object object, String message, Object... values) {
         if (object == null) {
-            error(message);
+            error(message, values);
         }
     }
 
@@ -54,9 +54,9 @@ public final class Assert {
         }
     }
 
-    public static void notEmpty(Collection<?> object, String message) {
+    public static void notEmpty(Collection<?> object, String message, Object... values) {
         if (object == null || object.isEmpty()) {
-            error(message);
+            error(message, values);
         }
     }
 
@@ -72,9 +72,9 @@ public final class Assert {
         }
     }
 
-    public static void isEmpty(Collection<?> object, String message) {
+    public static void isEmpty(Collection<?> object, String message, Object... values) {
         if (object != null && !object.isEmpty()) {
-            error(message);
+            error(message, values);
         }
     }
 
@@ -90,9 +90,9 @@ public final class Assert {
         }
     }
 
-    public static void notBlank(String string, String message) {
+    public static void notBlank(String string, String message, Object... values) {
         if (string == null || string.trim().isEmpty()) {
-            error(message);
+            error(message, values);
         }
     }
 
@@ -108,8 +108,8 @@ public final class Assert {
         }
     }
 
-    private static void error(String message) {
-        throw new BusinessException(message);
+    private static void error(String message, Object... values) {
+        throw new BusinessException(String.format(message, values));
     }
 
     private static void error(ICode code) {

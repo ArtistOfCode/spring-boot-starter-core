@@ -1,6 +1,6 @@
 package com.codeartist.component.core.support.serializer;
 
-import com.codeartist.component.core.util.DateUtil;
+import com.codeartist.component.core.util.DateUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
@@ -18,7 +18,7 @@ import java.time.LocalTime;
 /**
  * JSON序列化
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/8/18
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -54,8 +54,8 @@ public final class JacksonSerializer {
     private static Jackson2ObjectMapperBuilder builder() {
         return Jackson2ObjectMapperBuilder.json()
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
-                .serializerByType(LocalDate.class, new LocalDateSerializer(DateUtil.LONG_DATE_FORMATTER))
-                .serializerByType(LocalTime.class, new LocalTimeSerializer(DateUtil.LONG_TIME_FORMATTER))
-                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateUtil.LONG_DATETIME_FORMATTER));
+                .serializerByType(LocalDate.class, new LocalDateSerializer(DateUtils.LONG_DATE_FORMATTER))
+                .serializerByType(LocalTime.class, new LocalTimeSerializer(DateUtils.LONG_TIME_FORMATTER))
+                .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateUtils.LONG_DATETIME_FORMATTER));
     }
 }

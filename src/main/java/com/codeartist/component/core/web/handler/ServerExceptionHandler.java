@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 服务端异常处理
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/11
  */
 @Slf4j
@@ -51,7 +51,7 @@ public class ServerExceptionHandler {
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ResponseError> feignException(FeignException e) {
-        log.warn("Feign exception: {}", e.getMessage());
+        log.error("Feign exception at {}, {}", e.getMethodKey(), e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(e.getResponseError());

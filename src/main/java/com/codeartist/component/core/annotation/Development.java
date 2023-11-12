@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * 非生产环境Profile
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/11/18
  */
 @Target({ElementType.TYPE, ElementType.METHOD})

@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 业务异常，返回客户端异常消息，warn 级别日志
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/8
  */
 @Getter

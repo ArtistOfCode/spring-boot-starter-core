@@ -1,13 +1,13 @@
 package com.codeartist.component.core.test.util;
 
-import com.codeartist.component.core.test.JUnit5TestRunner;
+import com.codeartist.component.core.support.test.AbstractJUnit5RunnerTests;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/11/23
  */
-class DateUtilTest extends JUnit5TestRunner {
+class DateUtilsTest extends AbstractJUnit5RunnerTests {
 
     @Test
     public void dateUtil() {

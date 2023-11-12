@@ -1,12 +1,14 @@
 package com.codeartist.component.core.support.cache.annotation;
 
+import com.codeartist.component.core.entity.enums.Constants;
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.*;
 
 /**
- * 清除缓存注解，与 {@link Cache} 配置使用，该注解只生成动态键，键由 {@code value} 前缀和 {@code spelKey} 的SpEL表达式组成，
- * SpEL表达式的根是方法参数数组。
+ * 清除缓存注解
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @see Cache
  * @since 2018-11-07
  */
@@ -18,15 +20,22 @@ public @interface CacheDelete {
     /**
      * 指定不同集群
      */
-    String cluster() default "default";
+    String cluster() default Constants.DEFAULT;
 
     /**
-     * 缓的Key
+     * 缓存的Key
      */
+    @AliasFor("key")
+    String value();
+
+    /**
+     * 缓存的Key
+     */
+    @AliasFor("value")
     String key();
 
     /**
-     * 缓的Key（支持SpEL表达式）
+     * 缓存的Key（支持SpEL表达式）
      */
     String spel() default "";
 }

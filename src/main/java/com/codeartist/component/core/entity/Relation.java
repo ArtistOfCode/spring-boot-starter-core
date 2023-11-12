@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * 角色关联参数
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @since 2023-03-01
  */
 @Getter

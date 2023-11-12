@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Base64文件参数格式化
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/7/27
  */
 public class Base64FileFormatter implements Formatter<Base64File> {

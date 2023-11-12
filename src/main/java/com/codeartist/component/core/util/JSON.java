@@ -11,10 +11,9 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 
 /**
- * FastJSON Util
- * Use jackson like FastJSON
+ * JSON工具类
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/8
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

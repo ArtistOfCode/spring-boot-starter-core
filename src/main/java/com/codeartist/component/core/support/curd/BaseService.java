@@ -5,7 +5,7 @@ import com.codeartist.component.core.entity.PageInfo;
 /**
  * 基础服务类
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @since 2022-08-31
  */
 public interface BaseService<R, P> {

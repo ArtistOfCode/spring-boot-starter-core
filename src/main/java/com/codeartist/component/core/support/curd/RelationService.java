@@ -6,7 +6,7 @@ import com.codeartist.component.core.entity.Relation;
 /**
  * 关联表操作接口
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2023/4/23
  */
 public interface RelationService {

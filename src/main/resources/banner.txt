@@ -6,4 +6,4 @@
   ╚██████╗╚██████╔╝██████╔╝███████╗    ██║  ██║██║  ██║   ██║   ██║███████║   ██║
    ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚══════╝   ╚═╝
 Spring Boot Version: ${spring-boot.version}
-CodeArtist Framework Version: 1.0.0-SNAPSHOT
+CodeArtist Framework Version: 1.0.1-SNAPSHOT

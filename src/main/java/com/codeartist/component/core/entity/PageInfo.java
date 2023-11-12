@@ -11,7 +11,7 @@ import java.util.function.Function;
 /**
  * 分页响应实体
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/21
  */
 @Getter

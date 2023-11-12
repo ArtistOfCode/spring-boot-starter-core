@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * 分页参数
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/21
  */
 @Getter

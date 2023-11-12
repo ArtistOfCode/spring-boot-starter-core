@@ -1,13 +1,13 @@
 package com.codeartist.component.core.entity.enums;
 
-import com.codeartist.component.core.util.SpringContext;
+import com.codeartist.component.core.SpringContext;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * 环境配置
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/7/15
  */
 @Getter

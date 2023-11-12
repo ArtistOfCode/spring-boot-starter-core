@@ -1,23 +1,14 @@
 package com.codeartist.component.core.support.cache.annotation;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 分布式锁，该注解用于方法级缓存，缓存流程：
- * <ol>
- * <li>缓存当前时间戳</li>
- * <li>缓存成功：不存在锁，执行方法后清除锁</li>
- * <li>缓存失败：存在锁，抛出业务异常</li>
- * </ol>
- * <p>该注解支持动态键和过期时间，Redis键由 {@code value} 前缀和 {@code spelKey} 的SpEL表达式组成，
- * SpEL表达式的根是方法参数数组。
- * </p>
- * <p>
- * 过期时间由 {@code timeout} 时间值和 {@code timeUnit} 时间单位组成。
- * </p>
+ * 分布式锁
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2019/5/6
  */
 @Target({ElementType.METHOD})
@@ -26,12 +17,19 @@ import java.util.concurrent.TimeUnit;
 public @interface CacheLock {
 
     /**
-     * 缓的Key
+     * 缓存的Key
      */
+    @AliasFor("key")
+    String value();
+
+    /**
+     * 缓存的Key
+     */
+    @AliasFor("value")
     String key();
 
     /**
-     * 缓的Key（支持SpEL表达式）
+     * 缓存的Key（支持SpEL表达式）
      */
     String spel() default "";
 

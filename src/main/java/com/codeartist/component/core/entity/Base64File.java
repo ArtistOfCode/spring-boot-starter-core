@@ -13,7 +13,7 @@ import java.util.Base64;
 /**
  * Base64文件对象
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/7/27
  */
 public class Base64File implements MultipartFile {

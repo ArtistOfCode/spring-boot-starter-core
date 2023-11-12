@@ -5,7 +5,7 @@ import java.util.function.ToDoubleFunction;
 /**
  * 默认指标接口实现
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/11/30
  */
 public class NoopMetrics implements Metrics {

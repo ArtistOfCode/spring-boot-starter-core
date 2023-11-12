@@ -1,14 +1,14 @@
 package com.codeartist.component.core.support.uuid;
 
-import java.util.function.Supplier;
-
 /**
  * ID生成器
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2023/2/21
  */
-@FunctionalInterface
-public interface IdGenerator extends Supplier<Long> {
+public interface IdGenerator {
 
+    Long nextID();
+
+    String nextUUID();
 }

@@ -6,7 +6,7 @@ import com.codeartist.component.core.entity.Relation;
 /**
  * 关联表数据库操作
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2023/6/28
  */
 public interface RelationMapper<T> extends BaseMapper<T> {

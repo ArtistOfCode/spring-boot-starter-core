@@ -1,9 +1,9 @@
-package com.codeartist.component.core.support.mq.bean;
+package com.codeartist.component.core.support.mq;
 
 /**
  * MQ类型
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/5/8
  */
 public enum MqType {

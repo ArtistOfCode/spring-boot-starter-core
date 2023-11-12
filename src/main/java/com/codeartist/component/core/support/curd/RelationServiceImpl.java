@@ -3,10 +3,9 @@ package com.codeartist.component.core.support.curd;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.codeartist.component.core.entity.Rel;
 import com.codeartist.component.core.entity.Relation;
+import com.codeartist.component.core.SpringContext;
 import lombok.Getter;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ResolvableType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -22,9 +21,6 @@ import java.util.stream.Collectors;
  */
 @Getter
 public class RelationServiceImpl implements RelationService {
-
-    @Autowired
-    private BeanFactory beanFactory;
 
     @Override
     public <T> Relation getRelation(Rel<T> rel, Long id) {
@@ -56,7 +52,7 @@ public class RelationServiceImpl implements RelationService {
 
     private <T> RelationMapper<T> getMapper(Class<T> entity) {
         ResolvableType requiredType = ResolvableType.forClassWithGenerics(RelationMapper.class, entity);
-        ObjectProvider<RelationMapper<T>> beanProvider = beanFactory.getBeanProvider(requiredType);
+        ObjectProvider<RelationMapper<T>> beanProvider = SpringContext.getBeanProvider(requiredType);
         return beanProvider.getIfAvailable();
     }
 }

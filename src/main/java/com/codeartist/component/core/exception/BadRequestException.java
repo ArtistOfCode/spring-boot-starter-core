@@ -3,7 +3,7 @@ package com.codeartist.component.core.exception;
 /**
  * 请求异常，返回客户端异常消息，后端不打印日志
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/8
  */
 public class BadRequestException extends RuntimeException {

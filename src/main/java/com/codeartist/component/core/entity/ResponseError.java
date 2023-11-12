@@ -1,13 +1,13 @@
 package com.codeartist.component.core.entity;
 
-import com.codeartist.component.core.util.SpringContext;
+import com.codeartist.component.core.SpringContext;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * HTTP 接口响应异常实体
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2022/7/22
  */
 @Getter

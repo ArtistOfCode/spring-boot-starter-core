@@ -5,7 +5,7 @@ import java.util.function.ToDoubleFunction;
 /**
  * 监控指标
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2021/7/23
  */
 public interface Metrics {

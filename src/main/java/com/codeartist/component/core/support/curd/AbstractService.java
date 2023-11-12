@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.codeartist.component.core.entity.EntityEvent;
 import com.codeartist.component.core.entity.PageInfo;
 import com.codeartist.component.core.entity.PageParam;
-import com.codeartist.component.core.entity.enums.GlobalConstants.EntityEventType;
-import com.codeartist.component.core.util.AuthContext;
-import com.codeartist.component.core.util.SpringContext;
+import com.codeartist.component.core.entity.enums.Constants.EntityEventType;
+import com.codeartist.component.core.support.auth.AuthContext;
+import com.codeartist.component.core.SpringContext;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,8 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     private BaseMapper<D> mapper;
     @Autowired
     private BaseConverter<D, P, R> converter;
+    @Autowired
+    private AuthContext authContext;
 
     protected void doBasicCheck(P p) {
         SpringContext.validate(p);
@@ -55,7 +57,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     public void save(P p) {
         doBasicCheck(p);
 
-        Long userId = AuthContext.getUserId();
+        Long userId = authContext.getUserId();
 
         if (p.getId() != null) {
             D old = getMapper().selectById(p.getId());

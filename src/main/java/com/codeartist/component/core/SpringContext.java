@@ -1,4 +1,4 @@
-package com.codeartist.component.core.util;
+package com.codeartist.component.core;
 
 import com.codeartist.component.core.exception.BadRequestException;
 import org.springframework.beans.factory.ObjectProvider;

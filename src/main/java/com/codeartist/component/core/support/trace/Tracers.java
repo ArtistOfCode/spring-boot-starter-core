@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 
 /**
  * 链路追踪
+ * <p>
+ * TODO 修改链路追踪封装，现在的实现不清晰
  *
  * @author J.N.AI
  * @date 2023/8/4

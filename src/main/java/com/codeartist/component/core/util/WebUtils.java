@@ -13,11 +13,11 @@ import java.util.Optional;
 /**
  * Web工具类
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2020/9/8
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class WebUtil {
+public final class WebUtils {
 
     public static String getClientIp() {
         HttpServletRequest request = getRequest();
@@ -55,5 +55,9 @@ public final class WebUtil {
                 .map(att -> (ServletRequestAttributes) att)
                 .map(ServletRequestAttributes::getResponse)
                 .orElseThrow(() -> new BusinessException("Response info error."));
+    }
+
+    public static String getRequestHeader(String key) {
+        return getRequest().getHeader(key);
     }
 }

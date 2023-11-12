@@ -1,6 +1,6 @@
 package com.codeartist.component.core.entity;
 
-import com.codeartist.component.core.entity.enums.GlobalConstants.EntityEventType;
+import com.codeartist.component.core.entity.enums.Constants.EntityEventType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

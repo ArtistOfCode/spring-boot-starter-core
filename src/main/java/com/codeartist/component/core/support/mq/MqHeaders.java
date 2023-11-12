@@ -1,11 +1,11 @@
-package com.codeartist.component.core.support.mq.bean;
+package com.codeartist.component.core.support.mq;
 
 import java.util.HashMap;
 
 /**
  * MQ请求头
  *
- * @author 艾江南
+ * @author AiJiangnan
  * @date 2023/5/4
  */
 public class MqHeaders extends HashMap<String, String> {
