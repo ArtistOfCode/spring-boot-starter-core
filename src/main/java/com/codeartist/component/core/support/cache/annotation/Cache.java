@@ -18,21 +18,22 @@ import java.util.concurrent.TimeUnit;
 public @interface Cache {
 
     /**
-     * 指定不同集群
+     * Redis：指定不同集群
+     * Caffeine：指定本地缓存Bean
      */
-    String cluster() default Constants.DEFAULT;
+    String name() default Constants.DEFAULT;
 
     /**
      * 缓存的Key
      */
     @AliasFor("key")
-    String value();
+    String value() default "";
 
     /**
      * 缓存的Key
      */
     @AliasFor("value")
-    String key();
+    String key() default "";
 
     /**
      * 缓存的Key（支持SpEL表达式）

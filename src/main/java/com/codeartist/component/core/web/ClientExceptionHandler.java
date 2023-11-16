@@ -1,4 +1,4 @@
-package com.codeartist.component.core.web.handler;
+package com.codeartist.component.core.web;
 
 import com.codeartist.component.core.entity.ResponseError;
 import com.codeartist.component.core.entity.enums.ApiHttpStatus;

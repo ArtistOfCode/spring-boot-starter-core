@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * 业务断言测试类
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023-11-12
  */
 class AssertTest extends AbstractJUnit5RunnerTests {

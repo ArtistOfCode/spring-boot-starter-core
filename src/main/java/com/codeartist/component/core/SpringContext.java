@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Spring上下文工具类
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/5/11
  */
 public final class SpringContext implements EnvironmentAware, ApplicationContextAware {

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 验证码Key
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023-11-12
  */
 @Target({ElementType.FIELD})

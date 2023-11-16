@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * 验证码注解
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023-11-12
  */
 @Target({ElementType.METHOD})
@@ -27,4 +27,9 @@ public @interface Captcha {
      */
     @AliasFor("value")
     CaptchaType type() default CaptchaType.PICTURE;
+
+    /**
+     * 业务码
+     */
+    String code();
 }

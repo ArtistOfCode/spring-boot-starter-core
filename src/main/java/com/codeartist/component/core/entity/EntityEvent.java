@@ -12,7 +12,7 @@ import org.springframework.core.ResolvableTypeProvider;
 /**
  * 实体修改事件
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/6/7
  */
 @Setter

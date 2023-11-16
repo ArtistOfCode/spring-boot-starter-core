@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 基础转换接口
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/6/1
  */
 public interface BaseConverter<D, P, R> {

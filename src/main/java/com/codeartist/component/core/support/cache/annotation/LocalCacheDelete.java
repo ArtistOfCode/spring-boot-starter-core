@@ -20,13 +20,13 @@ public @interface LocalCacheDelete {
      * 缓存的Key
      */
     @AliasFor("key")
-    String value();
+    String value() default "";
 
     /**
      * 缓存的Key
      */
     @AliasFor("value")
-    String key();
+    String key() default "";
 
     /**
      * 缓存的Key（支持SpEL表达式）

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 关联查询
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023-10-07
  */
 @Getter

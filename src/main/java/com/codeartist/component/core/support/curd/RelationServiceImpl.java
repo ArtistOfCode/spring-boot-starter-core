@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * 抽象关联服务类
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/6/1
  */
 @Getter

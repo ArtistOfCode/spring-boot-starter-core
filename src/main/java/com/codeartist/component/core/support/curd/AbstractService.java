@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 抽象服务类
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/6/1
  */
 @Getter

@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 业务异常HTTP状态码
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/7/25
  */
 @Getter

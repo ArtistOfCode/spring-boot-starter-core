@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 /**
  * 默认链路追踪实现
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/8/4
  */
 public class NoopTracers implements Tracers {

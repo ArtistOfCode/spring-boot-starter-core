@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * <p>
  * TODO 修改链路追踪封装，现在的实现不清晰
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/8/4
  */
 public interface Tracers {

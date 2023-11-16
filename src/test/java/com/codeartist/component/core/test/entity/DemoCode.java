@@ -5,7 +5,7 @@ import com.codeartist.component.core.entity.ICode;
 /**
  * 测试码
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023-11-12
  */
 public class DemoCode implements ICode {

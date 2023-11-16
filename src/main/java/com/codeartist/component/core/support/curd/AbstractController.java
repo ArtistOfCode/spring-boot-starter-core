@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 抽象控制类
  *
- * @author J.N.AI
+ * @author AiJiangnan
  * @date 2023/6/1
  */
 @Getter
