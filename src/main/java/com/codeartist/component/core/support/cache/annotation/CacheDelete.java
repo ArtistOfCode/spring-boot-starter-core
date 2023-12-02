@@ -18,24 +18,27 @@ import java.lang.annotation.*;
 public @interface CacheDelete {
 
     /**
-     * 指定不同集群
+     * Caffeine：指定本地缓存Bean
+     * Redis：指定不同集群
      */
-    String cluster() default Constants.DEFAULT;
+    String[] name() default {Constants.DEFAULT, Constants.DEFAULT};
 
-    /**
-     * 缓存的Key
-     */
     @AliasFor("key")
     String value() default "";
 
     /**
-     * 缓存的Key
+     * 缓存的Key（支持SpEL表达式）
      */
     @AliasFor("value")
     String key() default "";
 
     /**
-     * 缓存的Key（支持SpEL表达式）
+     * 本地缓存
      */
-    String spel() default "";
+    boolean local() default false;
+
+    /**
+     * 二级缓存，和name相关，默认数组第一个为LocalCache，第二个为Cache
+     */
+    boolean combine() default false;
 }

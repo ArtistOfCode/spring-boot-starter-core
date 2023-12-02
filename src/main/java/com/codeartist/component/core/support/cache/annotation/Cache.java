@@ -18,27 +18,19 @@ import java.util.concurrent.TimeUnit;
 public @interface Cache {
 
     /**
-     * Redis：指定不同集群
      * Caffeine：指定本地缓存Bean
+     * Redis：指定不同集群
      */
-    String name() default Constants.DEFAULT;
+    String[] name() default {Constants.DEFAULT, Constants.DEFAULT};
 
-    /**
-     * 缓存的Key
-     */
     @AliasFor("key")
     String value() default "";
 
     /**
-     * 缓存的Key
+     * 缓存的Key（支持SpEL表达式）
      */
     @AliasFor("value")
     String key() default "";
-
-    /**
-     * 缓存的Key（支持SpEL表达式）
-     */
-    String spel() default "";
 
     /**
      * 缓存过期时间
@@ -46,7 +38,17 @@ public @interface Cache {
     long timeout() default -1;
 
     /**
-     * 缓存过期时间单位（默认：毫秒）
+     * 缓存过期时间单位（默认：秒）
      */
-    TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
+    TimeUnit timeUnit() default TimeUnit.SECONDS;
+
+    /**
+     * 本地缓存
+     */
+    boolean local() default false;
+
+    /**
+     * 二级缓存，和name相关，默认数组第一个为LocalCache，第二个为Cache
+     */
+    boolean combine() default false;
 }

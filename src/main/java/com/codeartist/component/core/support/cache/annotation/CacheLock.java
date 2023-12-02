@@ -1,5 +1,6 @@
 package com.codeartist.component.core.support.cache.annotation;
 
+import com.codeartist.component.core.entity.enums.Constants;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
@@ -17,21 +18,18 @@ import java.util.concurrent.TimeUnit;
 public @interface CacheLock {
 
     /**
-     * 缓存的Key
+     * Redis：指定不同集群
      */
+    String[] name() default {Constants.DEFAULT};
+
     @AliasFor("key")
     String value() default "";
 
     /**
-     * 缓存的Key
+     * 缓存的Key（支持SpEL表达式）
      */
     @AliasFor("value")
     String key() default "";
-
-    /**
-     * 缓存的Key（支持SpEL表达式）
-     */
-    String spel() default "";
 
     /**
      * 缓存过期时间
@@ -41,5 +39,5 @@ public @interface CacheLock {
     /**
      * 缓存过期时间单位
      */
-    TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
+    TimeUnit timeUnit() default TimeUnit.SECONDS;
 }

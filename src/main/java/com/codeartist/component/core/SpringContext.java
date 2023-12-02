@@ -9,6 +9,8 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
@@ -137,6 +139,60 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
         ConstraintViolation<T> violation = violations.iterator().next();
         String field = violation.getPropertyPath().toString();
         throw new BadRequestException(field + violation.getMessage());
+    }
+
+    // Transaction
+
+    public static void beforeCommit(Runnable runnable) {
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void beforeCommit(boolean readOnly) {
+                    runnable.run();
+                }
+            });
+        } else {
+            runnable.run();
+        }
+    }
+
+    public static void beforeCompletion(Runnable runnable) {
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void beforeCompletion() {
+                    runnable.run();
+                }
+            });
+        } else {
+            runnable.run();
+        }
+    }
+
+    public static void afterCommit(Runnable runnable) {
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    runnable.run();
+                }
+            });
+        } else {
+            runnable.run();
+        }
+    }
+
+    public static void afterCompletion(Runnable runnable) {
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCompletion(int status) {
+                    runnable.run();
+                }
+            });
+        } else {
+            runnable.run();
+        }
     }
 
     @Override
