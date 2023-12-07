@@ -1,6 +1,5 @@
-package com.codeartist.component.core.entity;
+package com.codeartist.component.core.entity.event;
 
-import com.codeartist.component.core.entity.enums.Constants.EntityEventType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -18,20 +17,16 @@ import org.springframework.core.ResolvableTypeProvider;
 @Setter
 @Getter
 @JsonIgnoreProperties({"source", "timestamp"})
-public class EntityEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
+abstract class EntityEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
-    private EntityEventType type;
-    private T oldEntity;
+    private boolean save;
+    private boolean update;
+    private boolean delete;
+
     private T entity;
 
-    public EntityEvent(Object source) {
+    public EntityEvent(Object source, T entity) {
         super(source);
-    }
-
-    public EntityEvent(Object source, EntityEventType type, T oldEntity, T entity) {
-        super(source);
-        this.type = type;
-        this.oldEntity = oldEntity;
         this.entity = entity;
     }
 

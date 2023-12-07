@@ -3,12 +3,12 @@ package com.codeartist.component.core.support.curd;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.codeartist.component.core.entity.EntityEvent;
-import com.codeartist.component.core.entity.PageInfo;
-import com.codeartist.component.core.entity.PageParam;
-import com.codeartist.component.core.entity.enums.Constants.EntityEventType;
-import com.codeartist.component.core.support.auth.AuthContext;
 import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.entity.*;
+import com.codeartist.component.core.entity.event.EntityDeleteEvent;
+import com.codeartist.component.core.entity.event.EntitySaveEvent;
+import com.codeartist.component.core.entity.event.EntityUpdateEvent;
+import com.codeartist.component.core.support.auth.AuthContext;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +69,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
             D entity = getConverter().toDo(p);
             getMapper().updateById(entity);
-            SpringContext.publishEvent(new EntityEvent<>(this, EntityEventType.UPDATE, old, entity));
+            SpringContext.publishEvent(new EntityUpdateEvent<>(this, old, entity));
         } else {
             p.setCreateUser(userId);
             p.setUpdateUser(userId);
@@ -77,7 +77,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
             D entity = getConverter().toDo(p);
             getMapper().insert(entity);
-            SpringContext.publishEvent(new EntityEvent<>(this, EntityEventType.SAVE, null, entity));
+            SpringContext.publishEvent(new EntitySaveEvent<>(this, entity));
         }
     }
 
@@ -90,6 +90,6 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         }
 
         getMapper().deleteById(id);
-        SpringContext.publishEvent(new EntityEvent<>(this, EntityEventType.DELETE, old, old));
+        SpringContext.publishEvent(new EntityDeleteEvent<>(this, old));
     }
 }
