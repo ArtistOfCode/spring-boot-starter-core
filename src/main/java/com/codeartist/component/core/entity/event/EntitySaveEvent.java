@@ -1,5 +1,7 @@
 package com.codeartist.component.core.entity.event;
 
+import com.codeartist.component.core.support.curd.EntityContext;
+
 /**
  * 实体修改事件
  *
@@ -8,8 +10,7 @@ package com.codeartist.component.core.entity.event;
  */
 public class EntitySaveEvent<T> extends EntityEvent<T> {
 
-    public EntitySaveEvent(Object source, T entity) {
-        super(source, entity);
-        setSave(true);
+    public EntitySaveEvent(Object source, EntityContext<T, ?> entityContext) {
+        super(source, entityContext);
     }
 }

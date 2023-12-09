@@ -1,5 +1,6 @@
 package com.codeartist.component.core.entity.event;
 
+import com.codeartist.component.core.support.curd.EntityContext;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,8 +14,7 @@ import lombok.Setter;
 @Getter
 public class EntityDeleteEvent<T> extends EntityEvent<T> {
 
-    public EntityDeleteEvent(Object source, T entity) {
-        super(source, entity);
-        setDelete(true);
+    public EntityDeleteEvent(Object source, EntityContext<T, ?> entityContext) {
+        super(source, entityContext);
     }
 }

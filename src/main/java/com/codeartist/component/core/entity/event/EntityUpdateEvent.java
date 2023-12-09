@@ -1,5 +1,6 @@
 package com.codeartist.component.core.entity.event;
 
+import com.codeartist.component.core.support.curd.EntityContext;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,12 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EntityUpdateEvent<T> extends EntityEvent<T> {
-
-    private T oldEntity;
-
-    public EntityUpdateEvent(Object source, T oldEntity, T entity) {
-        super(source, entity);
-        this.oldEntity = oldEntity;
-        setUpdate(true);
+    public EntityUpdateEvent(Object source, EntityContext<T, ?> entityContext) {
+        super(source, entityContext);
     }
 }
