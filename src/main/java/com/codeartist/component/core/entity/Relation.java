@@ -3,6 +3,7 @@ package com.codeartist.component.core.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
@@ -20,5 +21,6 @@ public class Relation {
     private Long id;
 
     @NotNull
+    @NotEmpty
     private Set<Long> ids;
 }

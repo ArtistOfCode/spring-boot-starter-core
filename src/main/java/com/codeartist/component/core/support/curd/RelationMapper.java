@@ -11,5 +11,5 @@ import com.codeartist.component.core.entity.Relation;
  */
 public interface RelationMapper<T> extends BaseMapper<T> {
 
-    void insertBatch(Relation param);
+    void insertBatch(Relation param, boolean column);
 }

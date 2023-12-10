@@ -1,6 +1,5 @@
 package com.codeartist.component.core.support.curd;
 
-import com.codeartist.component.core.entity.Rel;
 import com.codeartist.component.core.entity.Relation;
 
 /**
@@ -11,9 +10,21 @@ import com.codeartist.component.core.entity.Relation;
  */
 public interface RelationService {
 
-    <T> Relation getRelation(Rel<T> rel, Long id);
+    Relation get(Long id, boolean column);
 
-    <T> void saveRelation(Rel<T> rel, Relation param);
+    void save(Relation param, boolean column);
 
-    <T> void deleteRelation(Rel<T> rel, Long id);
+    void delete(Long id, boolean column);
+
+    default Relation get(Long id) {
+        return get(id, true);
+    }
+
+    default void save(Relation param) {
+        save(param, true);
+    }
+
+    default void delete(Long id) {
+        delete(id, true);
+    }
 }
