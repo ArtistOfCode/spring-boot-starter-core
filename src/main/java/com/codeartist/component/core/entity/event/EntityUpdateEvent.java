@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 实体修改事件
+ * 实体更新事件
  *
  * @author AiJiangnan
  * @date 2023/6/7

@@ -2,6 +2,7 @@ package com.codeartist.component.core.support.curd;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.codeartist.component.core.entity.Relation;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 关联表数据库操作
@@ -11,5 +12,5 @@ import com.codeartist.component.core.entity.Relation;
  */
 public interface RelationMapper<T> extends BaseMapper<T> {
 
-    void insertBatch(Relation param, boolean column);
+    void insertBatch(@Param("param") Relation param, @Param("column") boolean column);
 }

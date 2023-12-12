@@ -1,6 +1,7 @@
 package com.codeartist.component.core.exception;
 
-import com.codeartist.component.core.entity.ICode;
+import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.code.MessageCode;
 import lombok.Getter;
 
 /**
@@ -12,15 +13,15 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    private ICode code;
+    private MessageCode messageCode;
 
     public BusinessException() {
         super();
     }
 
-    public BusinessException(ICode code) {
-        super(code.getName());
-        this.code = code;
+    public BusinessException(MessageCode messageCode) {
+        super(SpringContext.getMessage(messageCode));
+        this.messageCode = messageCode;
     }
 
     public BusinessException(String message) {
@@ -38,5 +39,4 @@ public class BusinessException extends RuntimeException {
     protected BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-
 }

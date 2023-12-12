@@ -4,14 +4,14 @@ import com.codeartist.component.core.support.test.AbstractJUnit5RunnerTests;
 import org.junit.jupiter.api.Test;
 
 /**
+ * 国际化测试
+ *
  * @author AiJiangnan
- * @date 2022/11/23
+ * @date 2023-12-11
  */
-class DateUtilsTest extends AbstractJUnit5RunnerTests {
+public class LocaleTest extends AbstractJUnit5RunnerTests {
 
     @Test
-    public void dateUtil() {
-        String dateTimeStr = "2022-02-14 08:29:00";
-
+    void locale() {
     }
 }

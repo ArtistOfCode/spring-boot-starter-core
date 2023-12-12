@@ -10,7 +10,7 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.ResolvableTypeProvider;
 
 /**
- * 实体修改事件
+ * 实体上下文事件
  *
  * @author AiJiangnan
  * @date 2023/6/7

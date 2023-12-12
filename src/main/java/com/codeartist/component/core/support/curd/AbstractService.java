@@ -10,18 +10,12 @@ import com.codeartist.component.core.entity.event.EntityDeleteEvent;
 import com.codeartist.component.core.entity.event.EntitySaveEvent;
 import com.codeartist.component.core.entity.event.EntityUpdateEvent;
 import com.codeartist.component.core.exception.BadRequestException;
-import com.codeartist.component.core.exception.BusinessException;
 import com.codeartist.component.core.support.auth.AuthContext;
+import com.codeartist.component.core.util.Assert;
 import lombok.Getter;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-
-import java.util.function.Consumer;
 
 /**
  * 抽象服务类
@@ -41,7 +35,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     @Autowired
     private ObjectProvider<EntityChecker<P, D>> entityCheckers;
     @Autowired
-    private ObjectProvider<Consumer<EntityContext<P, D>>> entityContextConsumers;
+    private ObjectProvider<EntityConsumer<P, D>> entityContextConsumers;
 
     protected EntityContext<P, D> createContext() {
         return new DefaultEntityContext<>();
@@ -53,6 +47,8 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
     @Override
     public R get(Long id) {
+        Assert.notNull(id, () -> new BadRequestException("ID不能为空"));
+
         D entity = getMapper().selectById(id);
         return getConverter().toVo(entity);
     }
@@ -106,7 +102,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void save(P p, EntityContext<P, D> context) {
-        Long userId = authContext.getUserId();
+        Long userId = authContext.getNullableUserId();
         context.setSave(true);
 
         p.setCreateUser(userId);
@@ -123,7 +119,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void update(P p, EntityContext<P, D> context) {
-        Long userId = authContext.getUserId();
+        Long userId = authContext.getNullableUserId();
         context.setUpdate(true);
 
         D old = getMapper().selectById(p.getId());
@@ -145,20 +141,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void checkContext(EntityContext<P, D> context) {
-        BindingResult errors = new BeanPropertyBindingResult(context, "context");
-        entityCheckers.stream().forEach(checker -> checker.validate(context, errors));
-        if (errors.hasFieldErrors()) {
-            FieldError fieldError = errors.getFieldError();
-            if (fieldError != null) {
-                throw new BadRequestException(fieldError.getDefaultMessage());
-            }
-        }
-        if (errors.hasGlobalErrors()) {
-            ObjectError globalError = errors.getGlobalError();
-            if (globalError != null) {
-                throw new BusinessException(globalError.getDefaultMessage());
-            }
-        }
+        entityCheckers.stream().forEach(checker -> checker.check(context));
     }
 
     private void consumerContext(EntityContext<P, D> context) {

@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MqContext {

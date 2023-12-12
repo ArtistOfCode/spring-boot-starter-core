@@ -1,10 +1,14 @@
 package com.codeartist.component.core.support.curd;
 
+import com.codeartist.component.core.code.ErrorResolver;
+
 /**
+ * 实体操作上下文
+ *
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public interface EntityContext<P, D> {
+public interface EntityContext<P, D> extends ErrorResolver {
 
     boolean isSave();
 

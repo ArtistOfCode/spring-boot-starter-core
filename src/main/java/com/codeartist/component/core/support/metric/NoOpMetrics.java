@@ -8,7 +8,7 @@ import java.util.function.ToDoubleFunction;
  * @author AiJiangnan
  * @date 2022/11/30
  */
-public class NoopMetrics implements Metrics {
+public class NoOpMetrics implements Metrics {
 
     @Override
     public void counter(String name, String... tags) {

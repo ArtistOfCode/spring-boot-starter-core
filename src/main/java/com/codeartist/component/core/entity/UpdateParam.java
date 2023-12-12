@@ -1,7 +1,7 @@
 package com.codeartist.component.core.entity;
 
 /**
- * 变更参数
+ * 数据变更操作人参数接口
  *
  * @author AiJiangnan
  * @date 2023/6/1

@@ -1,6 +1,5 @@
 package com.codeartist.component.core.entity;
 
-import com.codeartist.component.core.SpringContext;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,14 +19,6 @@ public class ResponseError {
     private String stackTrace;
 
     public ResponseError() {
-    }
-
-    public ResponseError(ICode code) {
-        this(code.getCode(), code.getName());
-    }
-
-    public ResponseError(int code, String message) {
-        this(SpringContext.getAppName(), code, message, null);
     }
 
     public ResponseError(String service, int code, String message) {

@@ -3,7 +3,7 @@ package com.codeartist.component.core.entity.event;
 import com.codeartist.component.core.support.curd.EntityContext;
 
 /**
- * 实体修改事件
+ * 实体保存事件
  *
  * @author AiJiangnan
  * @date 2023/6/7

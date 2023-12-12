@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * 抽象关联服务类
+ *
  * @author AiJiangnan
  * @date 2023-12-10
  */

@@ -1,5 +1,6 @@
 package com.codeartist.component.core.web;
 
+import com.codeartist.component.core.annotation.AppName;
 import com.codeartist.component.core.entity.ResponseError;
 import com.codeartist.component.core.entity.enums.ApiHttpStatus;
 import com.codeartist.component.core.exception.BadRequestException;
@@ -25,6 +26,9 @@ import java.util.Optional;
 @Order(1)
 @ControllerAdvice
 public class ClientExceptionHandler {
+
+    @AppName
+    private String appName;
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ResponseError> constraintViolationException(ConstraintViolationException e) {
@@ -57,6 +61,6 @@ public class ClientExceptionHandler {
     private ResponseEntity<ResponseError> badRequest(BadRequestException e) {
         return ResponseEntity
                 .status(ApiHttpStatus.CLIENT_WARNING.getValue())
-                .body(new ResponseError(ApiHttpStatus.CLIENT_WARNING.getValue(), e.getMessage()));
+                .body(new ResponseError(appName, e.getMessageCode().getCode(), e.getMessage()));
     }
 }

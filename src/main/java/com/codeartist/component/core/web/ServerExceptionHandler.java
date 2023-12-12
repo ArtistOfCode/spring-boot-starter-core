@@ -1,24 +1,24 @@
 package com.codeartist.component.core.web;
 
-import com.codeartist.component.core.entity.ICode;
+import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.annotation.AppName;
+import com.codeartist.component.core.code.ApiErrorCode;
+import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.entity.ResponseError;
-import com.codeartist.component.core.entity.enums.ApiErrorCode;
 import com.codeartist.component.core.entity.enums.ApiHttpStatus;
 import com.codeartist.component.core.entity.enums.Environments;
 import com.codeartist.component.core.exception.BusinessException;
 import com.codeartist.component.core.exception.FeignException;
 import com.codeartist.component.core.support.metric.Metrics;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * 服务端异常处理
@@ -29,32 +29,36 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Order(2)
 @ControllerAdvice
-@RequiredArgsConstructor
 public class ServerExceptionHandler {
 
-    private final Metrics metrics;
+    @AppName
+    private String appName;
+    @Autowired
+    private Metrics metrics;
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ResponseError> businessException(BusinessException e) {
-        ICode code = e.getCode();
+        MessageCode code = e.getMessageCode();
         if (code == null) {
-            log.warn("Business exception DO NOT define error code.", e);
+            log.warn("Business exception DO NOT define message code.", e);
             return ResponseEntity
                     .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                    .body(new ResponseError(ApiHttpStatus.BUSINESS_WARNING.getValue(), e.getMessage()));
+                    .body(new ResponseError(appName, ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), e.getMessage()));
         }
-        log.warn("Business exception: {} {}", code.getCode(), code.getName());
+        log.warn("Business exception: {} {}", code.getCode(), e.getMessage());
         return ResponseEntity
                 .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                .body(new ResponseError(code));
+                .body(new ResponseError(appName, code.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<ResponseError> feignException(FeignException e) {
-        log.error("Feign exception at {}, {}", e.getMethodKey(), e.getMessage());
+        ResponseError responseError = e.getResponseError();
+        log.error("Feign exception at {}, {}, {}, {}", e.getMethodKey(), responseError.getCode(),
+                responseError.getMessage(), responseError.getStackTrace());
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getResponseError());
+                .status(ApiHttpStatus.SERVER_ERROR.getValue())
+                .body(responseError);
     }
 
     @ExceptionHandler(Exception.class)
@@ -63,10 +67,13 @@ public class ServerExceptionHandler {
         String method = request.getMethod();
         String uri = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
         metrics.counter("api_error", "method", method, "uri", uri);
-        ResponseError error = new ResponseError(ApiErrorCode.SERVICE_ERROR);
-        error.setStackTrace(trace(e, method, uri));
+
+        ApiErrorCode serviceError = ApiErrorCode.GLOBAL_SERVICE_ERROR;
+        String message = SpringContext.getMessage(serviceError);
+
+        ResponseError error = new ResponseError(appName, serviceError.getCode(), message, trace(e, method, uri));
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(ApiHttpStatus.SERVER_ERROR.getValue())
                 .body(error);
     }
 

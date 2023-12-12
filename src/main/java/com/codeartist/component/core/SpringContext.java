@@ -2,10 +2,8 @@ package com.codeartist.component.core;
 
 import com.codeartist.component.core.exception.BadRequestException;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.EnvironmentAware;
+import org.springframework.context.*;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
@@ -17,6 +15,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -139,6 +138,24 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
         ConstraintViolation<T> violation = violations.iterator().next();
         String field = violation.getPropertyPath().toString();
         throw new BadRequestException(field + violation.getMessage());
+    }
+
+    // Message
+
+    public static String getMessage(String code, Object[] args, String defaultMessage) {
+        return applicationContext.getMessage(code, args, defaultMessage, getDefaultLocale());
+    }
+
+    public static String getMessage(String code, Object[] args) {
+        return applicationContext.getMessage(code, args, getDefaultLocale());
+    }
+
+    public static String getMessage(MessageSourceResolvable resolvable) {
+        return applicationContext.getMessage(resolvable, getDefaultLocale());
+    }
+
+    private static Locale getDefaultLocale() {
+        return LocaleContextHolder.getLocale();
     }
 
     // Transaction

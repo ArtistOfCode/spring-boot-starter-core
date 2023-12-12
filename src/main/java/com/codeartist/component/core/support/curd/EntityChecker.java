@@ -1,43 +1,34 @@
 package com.codeartist.component.core.support.curd;
 
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 /**
+ * 实体上下文检查抽象类
+ *
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public abstract class EntityChecker<P, D> implements Validator {
+public abstract class EntityChecker<P, D> {
 
-    protected void checkSave(EntityContext<P, D> context, Errors errors) {
+    protected void checkSave(EntityContext<P, D> context) {
     }
 
-    protected void checkUpdate(EntityContext<P, D> context, Errors errors) {
-        checkSave(context, errors);
+    protected void checkUpdate(EntityContext<P, D> context) {
+        checkSave(context);
     }
 
-    protected void checkDelete(EntityContext<P, D> context, Errors errors) {
+    protected void checkDelete(EntityContext<P, D> context) {
     }
 
-    protected void checkAll(EntityContext<P, D> context, Errors errors) {
+    protected void checkAll(EntityContext<P, D> context) {
     }
 
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return clazz.isAssignableFrom(EntityContext.class);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void validate(Object target, Errors errors) {
-        EntityContext<P, D> context = (EntityContext<P, D>) target;
-        checkAll(context, errors);
+    public void check(EntityContext<P, D> context) {
+        checkAll(context);
         if (context.isSave()) {
-            checkSave(context, errors);
+            checkSave(context);
         } else if (context.isUpdate()) {
-            checkUpdate(context, errors);
+            checkUpdate(context);
         } else if (context.isDelete()) {
-            checkDelete(context, errors);
+            checkDelete(context);
         }
     }
 }

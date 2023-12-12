@@ -21,7 +21,7 @@ public abstract class AbstractController<R, P extends PageParam> {
 
     @GetMapping
     @Operation(summary = "查询详情接口")
-    public R get(Long id) {
+    public R get(@RequestParam(required = false) Long id) {
         return getService().get(id);
     }
 

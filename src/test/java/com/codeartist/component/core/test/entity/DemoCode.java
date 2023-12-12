@@ -1,6 +1,6 @@
 package com.codeartist.component.core.test.entity;
 
-import com.codeartist.component.core.entity.ICode;
+import com.codeartist.component.core.code.MessageCode;
 
 /**
  * 测试码
@@ -8,7 +8,7 @@ import com.codeartist.component.core.entity.ICode;
  * @author AiJiangnan
  * @date 2023-11-12
  */
-public class DemoCode implements ICode {
+public class DemoCode implements MessageCode {
 
     @Override
     public int getCode() {
@@ -16,7 +16,7 @@ public class DemoCode implements ICode {
     }
 
     @Override
-    public String getName() {
-        return "Test code";
+    public String getMessageCode() {
+        return "";
     }
 }

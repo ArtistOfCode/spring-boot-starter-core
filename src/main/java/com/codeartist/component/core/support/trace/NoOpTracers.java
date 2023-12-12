@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * @author AiJiangnan
  * @date 2023/8/4
  */
-public class NoopTracers implements Tracers {
+public class NoOpTracers implements Tracers {
 
     @Override
     public <T> T startSpan(String name, Map<String, String> tags, Supplier<T> supplier, Map<String, String> extractor) {

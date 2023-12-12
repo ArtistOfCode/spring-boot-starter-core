@@ -3,10 +3,12 @@ package com.codeartist.component.core.support.curd;
 import java.util.function.Consumer;
 
 /**
+ * 实体上下文保存前处理器
+ *
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public class EntityConsumer<P, D> implements Consumer<EntityContext<P, D>> {
+public abstract class EntityConsumer<P, D> implements Consumer<EntityContext<P, D>> {
 
     protected void acceptAll(EntityContext<P, D> context) {
     }

@@ -36,8 +36,4 @@ public class FeignException extends RuntimeException {
     public FeignException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-
-    public void setResponseError(ResponseError responseError) {
-        this.responseError = responseError;
-    }
 }

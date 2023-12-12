@@ -1,7 +1,9 @@
 package com.codeartist.component.core.util;
 
 
-import com.codeartist.component.core.entity.ICode;
+import com.codeartist.component.core.code.ApiErrorCode;
+import com.codeartist.component.core.code.DefaultMessageCode;
+import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.exception.BusinessException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ public final class Assert {
         }
     }
 
-    public static void state(boolean expression, ICode code) {
+    public static void state(boolean expression, MessageCode code) {
         if (expression) {
             error(code);
         }
@@ -42,7 +44,7 @@ public final class Assert {
         }
     }
 
-    public static void notNull(Object object, ICode code) {
+    public static void notNull(Object object, MessageCode code) {
         if (object == null) {
             error(code);
         }
@@ -60,7 +62,7 @@ public final class Assert {
         }
     }
 
-    public static void notEmpty(Collection<?> object, ICode code) {
+    public static void notEmpty(Collection<?> object, MessageCode code) {
         if (object == null || object.isEmpty()) {
             error(code);
         }
@@ -78,7 +80,7 @@ public final class Assert {
         }
     }
 
-    public static void isEmpty(Collection<?> object, ICode code) {
+    public static void isEmpty(Collection<?> object, MessageCode code) {
         if (object != null && !object.isEmpty()) {
             error(code);
         }
@@ -96,7 +98,7 @@ public final class Assert {
         }
     }
 
-    public static void notBlank(String string, ICode code) {
+    public static void notBlank(String string, MessageCode code) {
         if (string == null || string.trim().isEmpty()) {
             error(code);
         }
@@ -108,11 +110,17 @@ public final class Assert {
         }
     }
 
-    private static void error(String message, Object... values) {
-        throw new BusinessException(String.format(message, values));
+    private static void error(String message, Object... args) {
+        error(message, message, args);
     }
 
-    private static void error(ICode code) {
+    private static void error(String code, String defaultMessage, Object... args) {
+        DefaultMessageCode messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(),
+                code, defaultMessage, args);
+        throw new BusinessException(messageCode);
+    }
+
+    private static void error(MessageCode code) {
         throw new BusinessException(code);
     }
 }

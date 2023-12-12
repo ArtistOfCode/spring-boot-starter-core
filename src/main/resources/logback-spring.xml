@@ -21,6 +21,7 @@
     <!-- 生产环境 -->
     <springProfile name="prod">
         <root level="INFO">
+            <appender-ref ref="FILE"/>
             <appender-ref ref="JSON-FILE"/>
         </root>
     </springProfile>

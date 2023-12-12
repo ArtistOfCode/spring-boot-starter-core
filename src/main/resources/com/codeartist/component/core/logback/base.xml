@@ -9,6 +9,7 @@
         </encoder>
     </appender>
 
+    <!--日志级别配置-->
     <springProfile name="!prod">
         <logger name="com.codeartist" level="DEBUG"/>
     </springProfile>
