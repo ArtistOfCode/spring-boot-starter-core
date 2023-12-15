@@ -43,10 +43,6 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
 
     // Environment
 
-    public static String getAppName() {
-        return getProperty("spring.application.name");
-    }
-
     public static String getProperty(String key) {
         return environment.getProperty(key);
     }

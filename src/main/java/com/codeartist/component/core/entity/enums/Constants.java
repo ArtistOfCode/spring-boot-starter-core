@@ -8,6 +8,7 @@ package com.codeartist.component.core.entity.enums;
  */
 public interface Constants {
 
+    String APPLICATION_NAME_KEY = "${spring.application.name}";
     String ROOT_PACKAGE_KEY = "${spring.root.package}";
     String DEFAULT = "default";
     String SESSION_ID_COOKIE = "JSESSIONID";

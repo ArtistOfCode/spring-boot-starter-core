@@ -1,7 +1,6 @@
 package com.codeartist.component.core.web;
 
 import com.codeartist.component.core.SpringContext;
-import com.codeartist.component.core.annotation.AppName;
 import com.codeartist.component.core.code.ApiErrorCode;
 import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.entity.ResponseError;
@@ -10,6 +9,7 @@ import com.codeartist.component.core.entity.enums.Environments;
 import com.codeartist.component.core.exception.BusinessException;
 import com.codeartist.component.core.exception.FeignException;
 import com.codeartist.component.core.support.metric.Metrics;
+import com.codeartist.component.core.support.props.GlobalProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ServerExceptionHandler {
 
-    @AppName
-    private String appName;
+    @Autowired
+    private GlobalProperties globalProperties;
     @Autowired
     private Metrics metrics;
 
@@ -43,12 +43,13 @@ public class ServerExceptionHandler {
             log.warn("Business exception DO NOT define message code.", e);
             return ResponseEntity
                     .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                    .body(new ResponseError(appName, ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), e.getMessage()));
+                    .body(new ResponseError(globalProperties.getAppName(),
+                            ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), e.getMessage()));
         }
         log.warn("Business exception: {} {}", code.getCode(), e.getMessage());
         return ResponseEntity
                 .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                .body(new ResponseError(appName, code.getCode(), e.getMessage()));
+                .body(new ResponseError(globalProperties.getAppName(), code.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(FeignException.class)
@@ -71,7 +72,7 @@ public class ServerExceptionHandler {
         ApiErrorCode serviceError = ApiErrorCode.GLOBAL_SERVICE_ERROR;
         String message = SpringContext.getMessage(serviceError);
 
-        ResponseError error = new ResponseError(appName, serviceError.getCode(), message, trace(e, method, uri));
+        ResponseError error = new ResponseError(globalProperties.getAppName(), serviceError.getCode(), message, trace(e, method, uri));
         return ResponseEntity
                 .status(ApiHttpStatus.SERVER_ERROR.getValue())
                 .body(error);

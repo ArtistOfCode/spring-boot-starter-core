@@ -8,23 +8,23 @@ import java.util.function.Consumer;
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public abstract class EntityConsumer<P, D> implements Consumer<EntityContext<P, D>> {
+public interface EntityConsumer<T extends EntityContext<P, D>, P, D> extends Consumer<T> {
 
-    protected void acceptAll(EntityContext<P, D> context) {
+    default void acceptAll(T context) {
     }
 
-    protected void acceptSave(EntityContext<P, D> context) {
+    default void acceptSave(T context) {
     }
 
-    protected void acceptUpdate(EntityContext<P, D> context) {
+    default void acceptUpdate(T context) {
         acceptSave(context);
     }
 
-    protected void acceptDelete(EntityContext<P, D> context) {
+    default void acceptDelete(T context) {
     }
 
     @Override
-    public void accept(EntityContext<P, D> context) {
+    default void accept(T context) {
         acceptAll(context);
         if (context.isSave()) {
             acceptSave(context);

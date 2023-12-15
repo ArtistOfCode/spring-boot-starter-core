@@ -6,22 +6,22 @@ package com.codeartist.component.core.support.curd;
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public abstract class EntityChecker<P, D> {
+public interface EntityChecker<T extends EntityContext<P, D>, P, D> {
 
-    protected void checkSave(EntityContext<P, D> context) {
+    default void checkSave(T context) {
     }
 
-    protected void checkUpdate(EntityContext<P, D> context) {
+    default void checkUpdate(T context) {
         checkSave(context);
     }
 
-    protected void checkDelete(EntityContext<P, D> context) {
+    default void checkDelete(T context) {
     }
 
-    protected void checkAll(EntityContext<P, D> context) {
+    default void checkAll(T context) {
     }
 
-    public void check(EntityContext<P, D> context) {
+    default void check(T context) {
         checkAll(context);
         if (context.isSave()) {
             checkSave(context);

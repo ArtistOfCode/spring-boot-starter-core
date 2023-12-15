@@ -13,9 +13,11 @@ import com.codeartist.component.core.exception.BadRequestException;
 import com.codeartist.component.core.support.auth.AuthContext;
 import com.codeartist.component.core.util.Assert;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 
 /**
  * 抽象服务类
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author AiJiangnan
  * @date 2023/6/1
  */
+@Slf4j
 @Getter
 public abstract class AbstractService<D, R, P extends PageParam> implements BaseService<R, P> {
 
@@ -33,9 +36,9 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     @Autowired
     private AuthContext authContext;
     @Autowired
-    private ObjectProvider<EntityChecker<P, D>> entityCheckers;
+    private ObjectProvider<EntityChecker<EntityContext<P, D>, P, D>> entityCheckers;
     @Autowired
-    private ObjectProvider<EntityConsumer<P, D>> entityContextConsumers;
+    private ObjectProvider<EntityConsumer<EntityContext<P, D>, P, D>> entityContextConsumers;
 
     protected EntityContext<P, D> createContext() {
         return new DefaultEntityContext<>();
@@ -141,11 +144,23 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void checkContext(EntityContext<P, D> context) {
-        entityCheckers.stream().forEach(checker -> checker.check(context));
+        StopWatch stopWatch = new StopWatch("Check Context Time");
+        entityCheckers.stream().forEach(checker -> {
+            stopWatch.start(checker.getClass().getSimpleName());
+            checker.check(context);
+            stopWatch.stop();
+        });
+        log.debug("Check context:\n{}", stopWatch.prettyPrint());
     }
 
     private void consumerContext(EntityContext<P, D> context) {
-        entityContextConsumers.stream().forEach(consumer -> consumer.accept(context));
+        StopWatch stopWatch = new StopWatch("Consumer Context Time");
+        entityContextConsumers.stream().forEach(consumer -> {
+            stopWatch.start(consumer.getClass().getSimpleName());
+            consumer.accept(context);
+            stopWatch.stop();
+        });
+        log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
     }
 
     private void clearContext(EntityContext<P, D> context) {
