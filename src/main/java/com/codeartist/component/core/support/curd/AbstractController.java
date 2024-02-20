@@ -40,7 +40,7 @@ public abstract class AbstractController<R, P extends PageParam> {
 
     @PutMapping("/{id}")
     @Operation(summary = "更新接口")
-    public void update(@PathVariable("") Long id, @RequestBody P param) {
+    public void update(@PathVariable("id") Long id, @RequestBody P param) {
         param.setId(id);
         getService().save(param);
     }
