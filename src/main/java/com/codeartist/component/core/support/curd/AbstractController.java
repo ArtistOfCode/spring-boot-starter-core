@@ -47,7 +47,7 @@ public abstract class AbstractController<R, P extends PageParam> {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "删除接口")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable("id") Long id) {
         getService().delete(id);
     }
 }
