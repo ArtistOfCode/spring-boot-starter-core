@@ -19,21 +19,29 @@ public abstract class AbstractController<R, P extends PageParam> {
     @Autowired
     private BaseService<R, P> service;
 
-    @GetMapping
-    @Operation(summary = "查询详情接口")
-    public R get(@RequestParam(required = false) Long id) {
+    @GetMapping("/{id}")
+    @Operation(summary = "详情接口")
+    public R get(@PathVariable("id") Long id) {
         return getService().get(id);
     }
 
-    @GetMapping("/page")
-    @Operation(summary = "分页查询接口")
+    @GetMapping
+    @Operation(summary = "查询接口")
     public PageInfo<R> get(P param) {
         return getService().get(param);
     }
 
     @PostMapping
-    @Operation(summary = "新建更新接口")
+    @Operation(summary = "新建接口")
     public void save(@RequestBody P param) {
+        param.setId(null);
+        getService().save(param);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "更新接口")
+    public void update(@PathVariable("") Long id, @RequestBody P param) {
+        param.setId(id);
         getService().save(param);
     }
 

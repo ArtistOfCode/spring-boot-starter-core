@@ -41,12 +41,19 @@ public class DefaultEntityContext<P, D> implements EntityContext<P, D> {
     @Override
     public void rejectClient(String message, Object... args) throws BadRequestException {
         DefaultMessageCode messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(),
-                message, message, args);
-        throw new BadRequestException(messageCode);
+                null, message, args);
+        rejectClient(messageCode);
     }
 
     @Override
     public void reject(MessageCode code) {
         throw new BusinessException(code);
+    }
+
+    @Override
+    public void reject(String message, Object... args) throws BadRequestException {
+        DefaultMessageCode messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(),
+                null, message, args);
+        reject(messageCode);
     }
 }

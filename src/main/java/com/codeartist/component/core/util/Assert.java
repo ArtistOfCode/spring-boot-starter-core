@@ -20,6 +20,8 @@ import java.util.function.Supplier;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Assert {
 
+    // State
+
     public static void state(boolean expression, String message, Object... values) {
         if (expression) {
             error(message, values);
@@ -37,6 +39,8 @@ public final class Assert {
             throw exception.get();
         }
     }
+
+    // Not Null
 
     public static void notNull(Object object, String message, Object... values) {
         if (object == null) {
@@ -56,6 +60,8 @@ public final class Assert {
         }
     }
 
+    // Not Empty
+
     public static void notEmpty(Collection<?> object, String message, Object... values) {
         if (object == null || object.isEmpty()) {
             error(message, values);
@@ -73,6 +79,8 @@ public final class Assert {
             throw exception.get();
         }
     }
+
+    // is Empty
 
     public static void isEmpty(Collection<?> object, String message, Object... values) {
         if (object != null && !object.isEmpty()) {
@@ -92,6 +100,8 @@ public final class Assert {
         }
     }
 
+    // Not Blank
+
     public static void notBlank(String string, String message, Object... values) {
         if (string == null || string.trim().isEmpty()) {
             error(message, values);
@@ -110,14 +120,10 @@ public final class Assert {
         }
     }
 
-    private static void error(String message, Object... args) {
-        error(message, message, args);
-    }
-
-    private static void error(String code, String defaultMessage, Object... args) {
+    private static void error(String defaultMessage, Object... args) {
         DefaultMessageCode messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(),
-                code, defaultMessage, args);
-        throw new BusinessException(messageCode);
+                null, defaultMessage, args);
+        error(messageCode);
     }
 
     private static void error(MessageCode code) {

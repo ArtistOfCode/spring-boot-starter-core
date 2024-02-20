@@ -16,4 +16,6 @@ public interface ErrorResolver {
     void rejectClient(String message, Object... args) throws BadRequestException;
 
     void reject(MessageCode code) throws BusinessException;
+
+    void reject(String message, Object... args) throws BadRequestException;
 }

@@ -105,7 +105,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void save(P p, EntityContext<P, D> context) {
-        Long userId = authContext.getNullableUserId();
+        Long userId = authContext.getUserId();
         context.setSave(true);
 
         p.setCreateUser(userId);
@@ -122,7 +122,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     private void update(P p, EntityContext<P, D> context) {
-        Long userId = authContext.getNullableUserId();
+        Long userId = authContext.getUserId();
         context.setUpdate(true);
 
         D old = getMapper().selectById(p.getId());

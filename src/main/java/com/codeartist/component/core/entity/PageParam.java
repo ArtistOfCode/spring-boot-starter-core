@@ -2,7 +2,7 @@ package com.codeartist.component.core.entity;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,12 +19,12 @@ public abstract class PageParam implements IdParam, UpdateParam {
     /**
      * 页码
      */
-    @JsonIgnore
+    @Schema(description = "页码")
     private Integer pageNo = 1;
     /**
      * 每页记录数
      */
-    @JsonIgnore
+    @Schema(description = "每页记录数")
     private Integer pageSize = 10;
 
     public <T> IPage<T> page() {

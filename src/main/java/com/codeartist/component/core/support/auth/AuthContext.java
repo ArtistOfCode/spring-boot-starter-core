@@ -8,7 +8,7 @@ package com.codeartist.component.core.support.auth;
  */
 public interface AuthContext {
 
-    Long getUserId();
+    Long getRequiredUserId();
 
-    Long getNullableUserId();
+    Long getUserId();
 }

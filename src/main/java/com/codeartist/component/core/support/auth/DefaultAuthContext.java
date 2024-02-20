@@ -14,14 +14,13 @@ import org.apache.commons.lang3.StringUtils;
 public class DefaultAuthContext implements AuthContext {
 
     @Override
-    public Long getUserId() {
+    public Long getRequiredUserId() {
         String userId = WebUtils.getRequestHeader(Constants.USER_ID_HEADER);
         Assert.notBlank(userId, "UserId is null.");
         return Long.valueOf(userId);
     }
 
-    @Override
-    public Long getNullableUserId() {
+    public Long getUserId() {
         String userId = WebUtils.getRequestHeader(Constants.USER_ID_HEADER);
         if (StringUtils.isBlank(userId)) {
             return null;

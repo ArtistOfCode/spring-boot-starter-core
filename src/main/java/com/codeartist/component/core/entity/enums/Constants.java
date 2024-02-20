@@ -14,8 +14,5 @@ public interface Constants {
     String SESSION_ID_COOKIE = "JSESSIONID";
     String TOKEN_HEADER = "token";
     String USER_ID_HEADER = "UserId";
-
-    enum EntityEventType {
-        SAVE, UPDATE, DELETE
-    }
+    String LIMIT_1_SQL = "LIMIT 1";
 }

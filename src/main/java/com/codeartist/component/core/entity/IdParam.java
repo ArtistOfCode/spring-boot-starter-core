@@ -9,4 +9,6 @@ package com.codeartist.component.core.entity;
 public interface IdParam {
 
     Long getId();
+
+    void setId(Long id);
 }

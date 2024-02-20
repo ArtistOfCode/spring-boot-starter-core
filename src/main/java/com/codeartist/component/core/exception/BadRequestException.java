@@ -1,6 +1,8 @@
 package com.codeartist.component.core.exception;
 
 import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.code.ApiErrorCode;
+import com.codeartist.component.core.code.DefaultMessageCode;
 import com.codeartist.component.core.code.MessageCode;
 import lombok.Getter;
 
@@ -26,6 +28,8 @@ public class BadRequestException extends RuntimeException {
 
     public BadRequestException(String message) {
         super(message);
+        this.messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(),
+                null, message, null);
     }
 
     public BadRequestException(String message, Throwable cause) {
