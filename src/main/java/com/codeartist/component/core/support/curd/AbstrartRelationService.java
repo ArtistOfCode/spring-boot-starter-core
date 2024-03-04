@@ -39,7 +39,7 @@ public abstract class AbstrartRelationService<D> implements RelationService {
         Set<Long> ids = getMapper().selectObjs(Wrappers.<D>lambdaQuery()
                         .eq(column, one, id)
                         .eq(!column, more, id)
-                        .select(column ? one : more))
+                        .select(column ? more : one))
                 .stream().map(o -> (Long) o).collect(Collectors.toSet());
 
         Relation entity = new Relation();
