@@ -12,7 +12,7 @@ public interface BaseConverter<D, P, R> {
 
     D toDo(P param);
 
-    R toVo(D role);
+    R toVo(D param);
 
-    List<R> toVo(List<D> roles);
+    List<R> toVo(List<D> param);
 }

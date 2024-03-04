@@ -133,7 +133,7 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
         }
         ConstraintViolation<T> violation = violations.iterator().next();
         String field = violation.getPropertyPath().toString();
-        throw new BadRequestException(field + violation.getMessage());
+        throw new BadRequestException(field + " " + violation.getMessage());
     }
 
     // Message

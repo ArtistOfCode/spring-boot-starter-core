@@ -3,7 +3,7 @@ package com.codeartist.component.core.web;
 import com.codeartist.component.core.entity.ResponseError;
 import com.codeartist.component.core.entity.enums.ApiHttpStatus;
 import com.codeartist.component.core.exception.BadRequestException;
-import com.codeartist.component.core.support.props.GlobalProperties;
+import com.codeartist.component.core.support.props.AppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.annotation.Order;
@@ -29,7 +29,7 @@ import java.util.Optional;
 public class ClientExceptionHandler {
 
     @Autowired
-    private GlobalProperties globalProperties;
+    private AppProperties appProperties;
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ResponseError> constraintViolationException(ConstraintViolationException e) {
@@ -62,6 +62,6 @@ public class ClientExceptionHandler {
     private ResponseEntity<ResponseError> badRequest(BadRequestException e) {
         return ResponseEntity
                 .status(ApiHttpStatus.CLIENT_WARNING.getValue())
-                .body(new ResponseError(globalProperties.getAppName(), e.getMessageCode().getCode(), e.getMessage()));
+                .body(new ResponseError(appProperties.getName(), e.getMessageCode().getCode(), e.getMessage()));
     }
 }

@@ -28,4 +28,3 @@ public class DefaultAuthContext implements AuthContext {
         return Long.valueOf(userId);
     }
 }
-
