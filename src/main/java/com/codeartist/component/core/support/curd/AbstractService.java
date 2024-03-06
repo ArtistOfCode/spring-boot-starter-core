@@ -145,22 +145,34 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
     private void checkContext(EntityContext<P, D> context) {
         StopWatch stopWatch = new StopWatch("Check Context Time");
-        entityCheckers.stream().forEach(checker -> {
-            stopWatch.start(checker.getClass().getSimpleName());
-            checker.check(context);
-            stopWatch.stop();
-        });
-        log.debug("Check context:\n{}", stopWatch.prettyPrint());
+        try {
+            entityCheckers.stream().forEach(checker -> {
+                stopWatch.start(checker.getClass().getSimpleName());
+                try {
+                    checker.check(context);
+                } finally {
+                    stopWatch.stop();
+                }
+            });
+        } finally {
+            log.debug("Check context:\n{}", stopWatch.prettyPrint());
+        }
     }
 
     private void consumerContext(EntityContext<P, D> context) {
         StopWatch stopWatch = new StopWatch("Consumer Context Time");
-        entityContextConsumers.stream().forEach(consumer -> {
-            stopWatch.start(consumer.getClass().getSimpleName());
-            consumer.accept(context);
-            stopWatch.stop();
-        });
-        log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
+        try {
+            entityContextConsumers.stream().forEach(consumer -> {
+                stopWatch.start(consumer.getClass().getSimpleName());
+                try {
+                    consumer.accept(context);
+                } finally {
+                    stopWatch.stop();
+                }
+            });
+        } finally {
+            log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
+        }
     }
 
     private void clearContext(EntityContext<P, D> context) {
