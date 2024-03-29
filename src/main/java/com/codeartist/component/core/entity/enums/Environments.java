@@ -14,13 +14,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Environments {
 
-    LOCAL(ProfileConst.LOCAL, ProfileGroup.LOCAL, "Local"),
-    TEST(ProfileConst.TEST, ProfileGroup.TEST, "Test"),
-    PROD(ProfileConst.PROD, ProfileGroup.PROD, "Prod"),
+    LOCAL(ProfileConst.LOCAL_PROFILE, Group.LOCAL_GROUP, "本地环境"),
+    TEST(ProfileConst.TEST_PROFILE, Group.TEST_GROUP, "测试环境"),
+    PROD(ProfileConst.PROD_PROFILE, Group.PROD_GROUP, "生产环境"),
     ;
 
     private final String profile;
-    private final String group;
+    private final Group group;
     private final String name;
 
     public boolean not() {
@@ -31,21 +31,22 @@ public enum Environments {
         return SpringContext.acceptsProfiles(this.getProfile());
     }
 
-    /**
-     * 环境组
-     */
-    public interface ProfileGroup {
+    @Getter
+    @AllArgsConstructor
+    public enum Group {
+        LOCAL_GROUP("local"),
+        TEST_GROUP("test"),
+        PROD_GROUP("prod"),
+        ;
 
-        String LOCAL = "local";
-        String TEST = "test";
-        String PROD = "prod";
-        String NOT_PROD = "!prod";
+        private final String name;
     }
 
     public interface ProfileConst {
 
-        String LOCAL = "local";
-        String TEST = "test";
-        String PROD = "prod";
+        String LOCAL_PROFILE = "local";
+        String TEST_PROFILE = "test";
+        String PROD_PROFILE = "prod";
+        String NOT_PROD_PROFILE = "!prod";
     }
 }

@@ -12,9 +12,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ApiHttpStatus {
-    CLIENT_WARNING(498, "Client warning."),
-    BUSINESS_WARNING(499, "Business warning."),
-    SERVER_ERROR(599, "Server error."),
+    CLIENT_WARNING(498, "Client Warning"),
+    BUSINESS_WARNING(499, "Business Warning"),
+    SERVER_ERROR(599, "Server Error"),
     ;
 
     private final int value;

@@ -1,6 +1,6 @@
 package com.codeartist.component.core.annotation;
 
-import com.codeartist.component.core.entity.enums.Environments.ProfileGroup;
+import com.codeartist.component.core.entity.enums.Environments;
 import org.springframework.context.annotation.Profile;
 
 import java.lang.annotation.*;
@@ -14,6 +14,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Profile(ProfileGroup.NOT_PROD)
+@Profile(Environments.ProfileConst.NOT_PROD_PROFILE)
 public @interface Development {
 }

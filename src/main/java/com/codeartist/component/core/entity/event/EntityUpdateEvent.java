@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EntityUpdateEvent<T> extends EntityEvent<T> {
-    public EntityUpdateEvent(Object source, EntityContext<T, ?> entityContext) {
+    public EntityUpdateEvent(Object source, EntityContext<?, T> entityContext) {
         super(source, entityContext);
     }
 }

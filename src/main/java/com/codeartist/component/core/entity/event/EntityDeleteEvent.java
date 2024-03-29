@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 public class EntityDeleteEvent<T> extends EntityEvent<T> {
 
-    public EntityDeleteEvent(Object source, EntityContext<T, ?> entityContext) {
+    public EntityDeleteEvent(Object source, EntityContext<?, T> entityContext) {
         super(source, entityContext);
     }
 }

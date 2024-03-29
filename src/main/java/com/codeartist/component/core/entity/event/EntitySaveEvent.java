@@ -10,7 +10,7 @@ import com.codeartist.component.core.support.curd.EntityContext;
  */
 public class EntitySaveEvent<T> extends EntityEvent<T> {
 
-    public EntitySaveEvent(Object source, EntityContext<T, ?> entityContext) {
+    public EntitySaveEvent(Object source, EntityContext<?, T> entityContext) {
         super(source, entityContext);
     }
 }

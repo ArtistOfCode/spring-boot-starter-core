@@ -34,5 +34,12 @@ public interface EntityContext<P, D> extends ErrorResolver {
 
     void setOldEntity(D entity);
 
-    void clear();
+    default void clear() {
+        setSave(false);
+        setUpdate(false);
+        setDelete(false);
+        setParam(null);
+        setEntity(null);
+        setOldEntity(null);
+    }
 }

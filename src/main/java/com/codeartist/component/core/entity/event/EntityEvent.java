@@ -20,9 +20,9 @@ import org.springframework.core.ResolvableTypeProvider;
 @JsonIgnoreProperties({"source", "timestamp"})
 abstract class EntityEvent<T> extends ApplicationEvent implements ResolvableTypeProvider {
 
-    private EntityContext<T, ?> entityContext;
+    private EntityContext<?, T> entityContext;
 
-    public EntityEvent(Object source, EntityContext<T, ?> entityContext) {
+    public EntityEvent(Object source, EntityContext<?, T> entityContext) {
         super(source);
         this.entityContext = entityContext;
     }
