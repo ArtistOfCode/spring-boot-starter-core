@@ -39,13 +39,6 @@ public class ServerExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ResponseError> businessException(BusinessException e) {
         MessageCode code = e.getMessageCode();
-        if (code == null) {
-            log.warn("Business exception DO NOT define message code.", e);
-            return ResponseEntity
-                    .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                    .body(new ResponseError(appProperties.getName(),
-                            ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), e.getMessage()));
-        }
         log.warn("Business exception: {} {}", code.getCode(), e.getMessage());
         return ResponseEntity
                 .status(ApiHttpStatus.BUSINESS_WARNING.getValue())

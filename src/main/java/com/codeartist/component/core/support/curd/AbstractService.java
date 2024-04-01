@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.entity.PageInfo;
 import com.codeartist.component.core.entity.PageParam;
 import com.codeartist.component.core.entity.event.EntityDeleteEvent;
@@ -17,7 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StopWatch;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 抽象服务类
@@ -75,12 +80,12 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         context.setParam(p);
 
         if (p.getId() != null) {
-            update(p, context);
+            doUpdate(p, context);
         } else {
-            save(p, context);
+            doSave(p, context);
         }
 
-        clearContext(context);
+        doAfter(context);
     }
 
     @Override
@@ -101,10 +106,10 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         getMapper().deleteById(id);
         SpringContext.publishEvent(new EntityDeleteEvent<>(this, context));
 
-        clearContext(context);
+        doAfter(context);
     }
 
-    private void save(P p, EntityContext<P, D> context) {
+    private void doSave(P p, EntityContext<P, D> context) {
         Long userId = authContext.getUserId();
         context.setSave(true);
 
@@ -121,7 +126,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         SpringContext.publishEvent(new EntitySaveEvent<>(this, context));
     }
 
-    private void update(P p, EntityContext<P, D> context) {
+    private void doUpdate(P p, EntityContext<P, D> context) {
         Long userId = authContext.getUserId();
         context.setUpdate(true);
 
@@ -129,7 +134,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         context.setOldEntity(old);
 
         if (old == null) {
-            throw new NullPointerException("更新记录不存在");
+            throw new BadRequestException("更新记录不存在");
         }
         p.setUpdateUser(userId);
 
@@ -141,6 +146,26 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
         getMapper().updateById(entity);
         SpringContext.publishEvent(new EntityUpdateEvent<>(this, context));
+    }
+
+    private void doAfter(EntityContext<P, D> context) {
+        context.clear();
+
+        List<MessageCode> clientErrors = context.getErrorResolver().getClientErrors();
+        List<MessageCode> errors = context.getErrorResolver().getErrors();
+
+        if (!CollectionUtils.isEmpty(clientErrors)) {
+            String message = clientErrors.stream()
+                    .map(SpringContext::getMessage)
+                    .collect(Collectors.joining("|"));
+            throw new BadRequestException(message);
+        }
+        if (!CollectionUtils.isEmpty(errors)) {
+            String message = errors.stream()
+                    .map(SpringContext::getMessage)
+                    .collect(Collectors.joining("|"));
+            throw new BadRequestException(message);
+        }
     }
 
     private void checkContext(EntityContext<P, D> context) {
@@ -173,9 +198,5 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         } finally {
             log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
         }
-    }
-
-    private void clearContext(EntityContext<P, D> context) {
-        context.clear();
     }
 }

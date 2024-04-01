@@ -8,7 +8,7 @@ import com.codeartist.component.core.code.ErrorResolver;
  * @author AiJiangnan
  * @date 2023-12-09
  */
-public interface EntityContext<P, D> extends ErrorResolver {
+public interface EntityContext<P, D> {
 
     boolean isSave();
 
@@ -33,6 +33,8 @@ public interface EntityContext<P, D> extends ErrorResolver {
     D getOldEntity();
 
     void setOldEntity(D entity);
+
+    ErrorResolver getErrorResolver();
 
     default void clear() {
         setSave(false);

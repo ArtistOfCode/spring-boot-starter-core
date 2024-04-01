@@ -1,8 +1,6 @@
 package com.codeartist.component.core.util;
 
 
-import com.codeartist.component.core.code.ApiErrorCode;
-import com.codeartist.component.core.code.DefaultMessageCode;
 import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.exception.BusinessException;
 import lombok.AccessLevel;
@@ -121,9 +119,7 @@ public final class Assert {
     }
 
     private static void error(String defaultMessage, Object... args) {
-        DefaultMessageCode messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(),
-                null, defaultMessage, args);
-        error(messageCode);
+        throw new BusinessException(defaultMessage, args);
     }
 
     private static void error(MessageCode code) {

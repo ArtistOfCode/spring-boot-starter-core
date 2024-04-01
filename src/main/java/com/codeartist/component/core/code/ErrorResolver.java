@@ -3,6 +3,8 @@ package com.codeartist.component.core.code;
 import com.codeartist.component.core.exception.BadRequestException;
 import com.codeartist.component.core.exception.BusinessException;
 
+import java.util.List;
+
 /**
  * 异常处理器接口
  *
@@ -11,23 +13,23 @@ import com.codeartist.component.core.exception.BusinessException;
  */
 public interface ErrorResolver {
 
-    default void rejectClient(MessageCode code) throws BadRequestException {
-        throw new BadRequestException(code);
-    }
+    List<MessageCode> getClientErrors();
 
-    default void rejectClient(String message, Object... args) throws BadRequestException {
-        DefaultMessageCode messageCode = new DefaultMessageCode(
-                ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), null, message, args);
-        rejectClient(messageCode);
-    }
+    List<MessageCode> getErrors();
 
-    default void reject(MessageCode code) {
-        throw new BusinessException(code);
-    }
+    void addClient(MessageCode code);
 
-    default void reject(String message, Object... args) throws BadRequestException {
-        DefaultMessageCode messageCode = new DefaultMessageCode(
-                ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), null, message, args);
-        reject(messageCode);
-    }
+    void addClient(String defaultMessage, Object... args);
+
+    void add(MessageCode code);
+
+    void add(String defaultMessage, Object... args);
+
+    void rejectClient(MessageCode code) throws BadRequestException;
+
+    void rejectClient(String defaultMessage, Object... args) throws BadRequestException;
+
+    void reject(MessageCode code) throws BusinessException;
+
+    void reject(String defaultMessage, Object... args) throws BusinessException;
 }

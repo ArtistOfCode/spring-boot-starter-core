@@ -15,32 +15,18 @@ import lombok.Getter;
 @Getter
 public class BadRequestException extends RuntimeException {
 
-    private MessageCode messageCode;
-
-    public BadRequestException() {
-        super();
-    }
+    private final MessageCode messageCode;
 
     public BadRequestException(MessageCode messageCode) {
         super(SpringContext.getMessage(messageCode));
         this.messageCode = messageCode;
     }
 
-    public BadRequestException(String message) {
-        super(message);
-        this.messageCode = new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(),
-                null, message, null);
+    public BadRequestException(String defaultMessage) {
+        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage));
     }
 
-    public BadRequestException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public BadRequestException(Throwable cause) {
-        super(cause);
-    }
-
-    protected BadRequestException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public BadRequestException(String defaultMessage, Object... args) {
+        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage, args));
     }
 }

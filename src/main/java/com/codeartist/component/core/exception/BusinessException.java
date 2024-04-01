@@ -1,6 +1,8 @@
 package com.codeartist.component.core.exception;
 
 import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.code.ApiErrorCode;
+import com.codeartist.component.core.code.DefaultMessageCode;
 import com.codeartist.component.core.code.MessageCode;
 import lombok.Getter;
 
@@ -13,30 +15,18 @@ import lombok.Getter;
 @Getter
 public class BusinessException extends RuntimeException {
 
-    private MessageCode messageCode;
-
-    public BusinessException() {
-        super();
-    }
+    private final MessageCode messageCode;
 
     public BusinessException(MessageCode messageCode) {
         super(SpringContext.getMessage(messageCode));
         this.messageCode = messageCode;
     }
 
-    public BusinessException(String message) {
-        super(message);
+    public BusinessException(String defaultMessage) {
+        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), defaultMessage));
     }
 
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public BusinessException(Throwable cause) {
-        super(cause);
-    }
-
-    protected BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public BusinessException(String defaultMessage, Object... args) {
+        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_BUSINESS_ERROR.getCode(), defaultMessage, args));
     }
 }
