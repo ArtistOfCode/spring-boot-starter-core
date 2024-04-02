@@ -12,28 +12,12 @@ import lombok.Getter;
 @Getter
 public class FeignException extends RuntimeException {
 
-    private String methodKey;
-    private ResponseError responseError;
+    private final String methodKey;
+    private final ResponseError responseError;
 
     public FeignException(String methodKey, ResponseError responseError) {
         super(responseError.getMessage());
         this.methodKey = methodKey;
         this.responseError = responseError;
-    }
-
-    public FeignException(String message) {
-        super(message);
-    }
-
-    public FeignException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public FeignException(Throwable cause) {
-        super(cause);
-    }
-
-    public FeignException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }
