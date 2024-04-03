@@ -46,7 +46,7 @@ public class PageInfo<T> {
     }
 
     public <R> PageInfo(IPage<R> page, Function<List<R>, List<T>> func) {
-        this.current = (int) page.getPages();
+        this.current = (int) page.getCurrent();
         this.total = (int) page.getTotal();
         this.records = func.apply(page.getRecords());
     }
