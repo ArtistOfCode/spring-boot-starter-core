@@ -180,7 +180,11 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
                 }
             });
         } finally {
-            log.debug("Check context:\n{}", stopWatch.prettyPrint());
+            if (log.isDebugEnabled()) {
+                if (stopWatch.getTaskCount() > 0) {
+                    log.debug("Check context:\n{}", stopWatch.prettyPrint());
+                }
+            }
         }
     }
 
@@ -196,7 +200,11 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
                 }
             });
         } finally {
-            log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
+            if (log.isDebugEnabled()) {
+                if (stopWatch.getTaskCount() > 0) {
+                    log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
+                }
+            }
         }
     }
 }
