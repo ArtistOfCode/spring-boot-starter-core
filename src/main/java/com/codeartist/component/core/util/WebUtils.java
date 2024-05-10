@@ -22,7 +22,10 @@ public final class WebUtils {
     public static String getClientIp() {
         HttpServletRequest request = getRequest();
         String unknown = "unknown";
-        String ip = request.getHeader("x-forwarded-for");
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
         if (ip == null || ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
