@@ -113,10 +113,11 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         p.setCreateUser(userId);
         p.setUpdateUser(userId);
 
+        checkContext(context);
+
         D entity = getConverter().toDo(p);
         context.setEntity(entity);
 
-        checkContext(context);
         consumerContext(context);
 
         getMapper().insert(entity);
@@ -135,10 +136,11 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         }
         p.setUpdateUser(userId);
 
+        checkContext(context);
+
         D entity = getConverter().toDo(p);
         context.setEntity(entity);
 
-        checkContext(context);
         consumerContext(context);
 
         getMapper().updateById(entity);
