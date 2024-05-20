@@ -40,9 +40,12 @@ public class ServerExceptionHandler {
     public ResponseEntity<ResponseError> businessException(BusinessException e) {
         MessageCode code = e.getMessageCode();
         log.warn("Business exception: {} {}", code.getCode(), e.getMessage());
+        ResponseError error = new ResponseError(appProperties.getName(), code.getCode(), e.getMessage());
+        error.setErrors(e.getBusinessMessage());
+
         return ResponseEntity
                 .status(ApiHttpStatus.BUSINESS_WARNING.getValue())
-                .body(new ResponseError(appProperties.getName(), code.getCode(), e.getMessage()));
+                .body(error);
     }
 
     @ExceptionHandler(FeignException.class)

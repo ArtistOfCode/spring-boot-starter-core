@@ -1,8 +1,6 @@
 package com.codeartist.component.core.exception;
 
-import com.codeartist.component.core.SpringContext;
 import com.codeartist.component.core.code.ApiErrorCode;
-import com.codeartist.component.core.code.DefaultMessageCode;
 import com.codeartist.component.core.code.MessageCode;
 import lombok.Getter;
 
@@ -13,20 +11,17 @@ import lombok.Getter;
  * @date 2020/9/8
  */
 @Getter
-public class BadRequestException extends RuntimeException {
-
-    private final MessageCode messageCode;
+public class BadRequestException extends BaseException {
 
     public BadRequestException(MessageCode messageCode) {
-        super(SpringContext.getMessage(messageCode));
-        this.messageCode = messageCode;
+        super(messageCode);
     }
 
     public BadRequestException(String defaultMessage) {
-        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage));
+        super(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage);
     }
 
     public BadRequestException(String defaultMessage, Object... args) {
-        this(new DefaultMessageCode(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage, args));
+        super(ApiErrorCode.GLOBAL_CLIENT_ERROR.getCode(), defaultMessage, args);
     }
 }

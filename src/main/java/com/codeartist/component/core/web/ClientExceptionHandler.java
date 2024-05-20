@@ -33,13 +33,13 @@ public class ClientExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ResponseError> constraintViolationException(ConstraintViolationException e) {
-        return badRequest(new BadRequestException(e.getMessage()));
+        return badRequestException(new BadRequestException(e.getMessage()));
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ResponseError> bindException(BindException e) {
         List<ObjectError> errors = e.getBindingResult().getAllErrors();
-        return badRequest(new BadRequestException(errors.get(0).getDefaultMessage()));
+        return badRequestException(new BadRequestException(errors.get(0).getDefaultMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -51,17 +51,16 @@ public class ClientExceptionHandler {
                 .map(args -> (DefaultMessageSourceResolvable) args[0])
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("");
-        return badRequest(new BadRequestException(name + " " + error.getDefaultMessage()));
+        return badRequestException(new BadRequestException(name + " " + error.getDefaultMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ResponseError> badRequestException(BadRequestException e) {
-        return badRequest(e);
-    }
-
-    private ResponseEntity<ResponseError> badRequest(BadRequestException e) {
+        ResponseError error = new ResponseError(appProperties.getName(), e.getMessageCode().getCode(), e.getMessage());
+        error.setErrors(e.getBusinessMessage());
         return ResponseEntity
                 .status(ApiHttpStatus.CLIENT_WARNING.getValue())
-                .body(new ResponseError(appProperties.getName(), e.getMessageCode().getCode(), e.getMessage()));
+                .body(error);
     }
+
 }

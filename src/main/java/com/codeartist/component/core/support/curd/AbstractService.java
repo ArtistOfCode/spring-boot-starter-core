@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.codeartist.component.core.SpringContext;
+import com.codeartist.component.core.code.ApiErrorCode;
 import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.entity.PageInfo;
 import com.codeartist.component.core.entity.PageParam;
@@ -17,12 +18,10 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StopWatch;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 抽象服务类
@@ -72,7 +71,6 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     @Override
-    @Transactional
     public void save(P p) {
         checkParam(p);
 
@@ -89,7 +87,6 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     }
 
     @Override
-    @Transactional
     public void delete(Long id) {
         D old = getMapper().selectById(id);
         if (old == null) {
@@ -155,16 +152,14 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         List<MessageCode> errors = context.getErrorResolver().getErrors();
 
         if (!CollectionUtils.isEmpty(clientErrors)) {
-            String message = clientErrors.stream()
-                    .map(SpringContext::getMessage)
-                    .collect(Collectors.joining("|"));
-            throw new BadRequestException(message);
+            BadRequestException clientException = new BadRequestException(ApiErrorCode.GLOBAL_CLIENT_ERROR);
+            clientException.setBusinessMessage(clientErrors);
+            throw clientException;
         }
         if (!CollectionUtils.isEmpty(errors)) {
-            String message = errors.stream()
-                    .map(SpringContext::getMessage)
-                    .collect(Collectors.joining("|"));
-            throw new BadRequestException(message);
+            BadRequestException exception = new BadRequestException(ApiErrorCode.GLOBAL_BUSINESS_ERROR);
+            exception.setBusinessMessage(errors);
+            throw exception;
         }
     }
 

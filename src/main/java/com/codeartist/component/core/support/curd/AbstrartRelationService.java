@@ -8,7 +8,6 @@ import com.codeartist.component.core.exception.BadRequestException;
 import com.codeartist.component.core.util.Assert;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,7 +49,6 @@ public abstract class AbstrartRelationService<D> implements RelationService {
     }
 
     @Override
-    @Transactional
     public void save(Relation param, boolean column) {
         checkParam(param);
         delete(param.getId(), column);
