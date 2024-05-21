@@ -83,7 +83,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
             doSave(p, context);
         }
 
-        doAfter(context);
+        doFinally(context);
     }
 
     @Override
@@ -99,11 +99,12 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
         checkContext(context);
         consumerContext(context);
-
         getMapper().deleteById(id);
+        afterContext(context);
+
         SpringContext.publishEvent(new EntityDeleteEvent<>(this, context));
 
-        doAfter(context);
+        doFinally(context);
     }
 
     private void doSave(P p, EntityContext<P, D> context) {
@@ -117,10 +118,10 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
         D entity = getConverter().toDo(p);
         context.setEntity(entity);
-
         consumerContext(context);
-
         getMapper().insert(entity);
+        afterContext(context);
+
         SpringContext.publishEvent(new EntitySaveEvent<>(this, context));
     }
 
@@ -140,14 +141,14 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
         D entity = getConverter().toDo(p);
         context.setEntity(entity);
-
         consumerContext(context);
-
         getMapper().updateById(entity);
+        afterContext(context);
+
         SpringContext.publishEvent(new EntityUpdateEvent<>(this, context));
     }
 
-    private void doAfter(EntityContext<P, D> context) {
+    private void doFinally(EntityContext<P, D> context) {
         context.clear();
 
         List<MessageCode> clientErrors = context.getErrorResolver().getClientErrors();
@@ -200,6 +201,26 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
             if (log.isDebugEnabled()) {
                 if (stopWatch.getTaskCount() > 0) {
                     log.debug("Consumer context:\n{}", stopWatch.prettyPrint());
+                }
+            }
+        }
+    }
+
+    private void afterContext(EntityContext<P, D> context) {
+        StopWatch stopWatch = new StopWatch("After Context Time");
+        try {
+            entityContextConsumers.stream().forEach(consumer -> {
+                stopWatch.start(consumer.getClass().getSimpleName());
+                try {
+                    consumer.after(context);
+                } finally {
+                    stopWatch.stop();
+                }
+            });
+        } finally {
+            if (log.isDebugEnabled()) {
+                if (stopWatch.getTaskCount() > 0) {
+                    log.debug("After context:\n{}", stopWatch.prettyPrint());
                 }
             }
         }
