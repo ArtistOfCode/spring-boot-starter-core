@@ -41,6 +41,9 @@ public class ResponseError {
     }
 
     public void setErrors(List<MessageCode> messageCodeList) {
+        if (messageCodeList == null) {
+            return;
+        }
         this.errors = messageCodeList.stream()
                 .map(m -> new BusinessError(m.getCode(), SpringContext.getMessage(m)))
                 .collect(Collectors.toList());
