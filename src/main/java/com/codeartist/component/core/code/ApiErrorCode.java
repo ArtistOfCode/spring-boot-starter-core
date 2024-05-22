@@ -18,6 +18,7 @@ public enum ApiErrorCode implements MessageCode {
     GLOBAL_BUSINESS_ERROR(100003, "global.business.error"),
     GLOBAL_SERVICE_BUSY_ERROR(100004, "global.service.busy.error"),
     GLOBAL_SERVICE_ERROR(100005, "global.service.error"),
+    GLOBAL_CAPTCHA_ERROR(100006, "global.captcha.error"),
     ;
 
     private final int code;
