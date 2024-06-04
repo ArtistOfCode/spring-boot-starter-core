@@ -10,16 +10,17 @@ import lombok.Getter;
  * @author AiJiangnan
  * @date 2022/7/15
  */
-@Getter
 @AllArgsConstructor
 public enum Environments {
 
-    LOCAL(ProfileConst.LOCAL_PROFILE, Group.LOCAL_GROUP, "本地环境"),
-    TEST(ProfileConst.TEST_PROFILE, Group.TEST_GROUP, "测试环境"),
-    PROD(ProfileConst.PROD_PROFILE, Group.PROD_GROUP, "生产环境"),
+    LOCAL(ProfileConst.LOCAL_PROFILE, Group.LOCAL_GROUP, "global.environment.local"),
+    TEST(ProfileConst.TEST_PROFILE, Group.TEST_GROUP, "global.environment.test"),
+    PROD(ProfileConst.PROD_PROFILE, Group.PROD_GROUP, "global.environment.prod"),
     ;
 
+    @Getter
     private final String profile;
+    @Getter
     private final Group group;
     private final String name;
 
@@ -29,6 +30,10 @@ public enum Environments {
 
     public boolean is() {
         return SpringContext.acceptsProfiles(this.getProfile());
+    }
+
+    public String getName() {
+        return SpringContext.getMessage(this.name, new Object[0]);
     }
 
     @Getter

@@ -10,7 +10,7 @@ public interface Constants {
 
     String APPLICATION_NAME_KEY = "${spring.application.name}";
     String ROOT_PACKAGE_KEY = "${spring.application.root-package}";
-    String MODULE_PACKAGE_KEY = "#{'${spring.application.module-package}'.split(',')}";
+    String MODULE_PACKAGE_KEY = "#{'${spring.application.module-package:}'.split(',')}";
 
     String DEFAULT = "default";
     String SESSION_ID_COOKIE = "JSESSIONID";

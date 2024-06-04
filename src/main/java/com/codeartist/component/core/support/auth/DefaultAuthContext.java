@@ -15,9 +15,9 @@ public class DefaultAuthContext implements AuthContext {
 
     @Override
     public Long getRequiredUserId() {
-        String userId = WebUtils.getRequestHeader(Constants.USER_ID_HEADER);
-        Assert.notBlank(userId, "UserId is null.");
-        return Long.valueOf(userId);
+        Long userId = getUserId();
+        Assert.notNull(userId, "UserId is null.");
+        return userId;
     }
 
     public Long getUserId() {
