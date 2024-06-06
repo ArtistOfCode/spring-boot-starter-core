@@ -3,6 +3,7 @@ package com.codeartist.component.core.support.curd;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.codeartist.component.core.SpringContext;
 import com.codeartist.component.core.code.ApiErrorCode;
 import com.codeartist.component.core.code.MessageCode;
@@ -64,7 +65,8 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     public PageInfo<R> get(P p) {
         D entity = getConverter().toDo(p);
 
-        QueryWrapper<D> wrapper = new QueryWrapper<>(entity);
+        QueryWrapper<D> wrapper = Wrappers.query(entity)
+                .orderBy(p.getOrderBy() != null, p.getAsc(), p.getOrderBy());
 
         IPage<D> page = getMapper().selectPage(p.page(), wrapper);
         return new PageInfo<>(page, getConverter()::toVo);

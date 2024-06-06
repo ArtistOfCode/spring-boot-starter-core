@@ -27,6 +27,12 @@ public abstract class PageParam implements IdParam, UpdateParam {
     @Schema(description = "每页记录数")
     private Integer pageSize = 10;
 
+    @Schema(description = "排序方式")
+    private Boolean asc = false;
+
+    @Schema(description = "排序字段")
+    private String orderBy;
+
     public <T> IPage<T> page() {
         pageNo = pageNo < 1 ? 1 : pageNo;
         pageSize = pageSize < 0 ? 10 : (pageSize > 200 ? 200 : pageSize);
