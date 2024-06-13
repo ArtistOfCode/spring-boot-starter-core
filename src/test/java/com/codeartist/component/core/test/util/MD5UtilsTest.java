@@ -1,6 +1,5 @@
 package com.codeartist.component.core.test.util;
 
-import com.codeartist.component.core.support.test.AbstractJUnit5RunnerTests;
 import com.codeartist.component.core.util.MD5Utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ import java.util.UUID;
  * @author AiJiangnan
  * @date 2022/11/24
  */
-class MD5UtilsTest extends AbstractJUnit5RunnerTests {
+class MD5UtilsTest {
 
     @Test
     public void md5() {

@@ -62,8 +62,11 @@ public class ServerExceptionHandler {
     public ResponseEntity<ResponseError> exception(Exception e, HttpServletRequest request) {
         log.error("Server exception", e);
         String method = request.getMethod();
+
         String uri = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
-        metrics.counter("api_error", "method", method, "uri", uri);
+        if (uri != null) {
+            metrics.counter("api_error", "method", method, "uri", uri);
+        }
 
         ApiErrorCode serviceError = ApiErrorCode.GLOBAL_SERVICE_ERROR;
         String message = SpringContext.getMessage(serviceError);

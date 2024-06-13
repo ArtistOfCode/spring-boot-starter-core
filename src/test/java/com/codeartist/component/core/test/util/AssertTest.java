@@ -2,7 +2,6 @@ package com.codeartist.component.core.test.util;
 
 import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.exception.BusinessException;
-import com.codeartist.component.core.support.test.AbstractJUnit5RunnerTests;
 import com.codeartist.component.core.test.entity.DemoCode;
 import com.codeartist.component.core.util.Assert;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author AiJiangnan
  * @date 2023-11-12
  */
-class AssertTest extends AbstractJUnit5RunnerTests {
+class AssertTest {
 
     private static final String defaultMessage = "Test message";
     private static final MessageCode defaultCode = new DemoCode();

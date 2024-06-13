@@ -1,6 +1,5 @@
 package com.codeartist.component.core.test.util;
 
-import com.codeartist.component.core.support.test.AbstractJUnit5RunnerTests;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -9,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * @author AiJiangnan
  * @date 2023-12-11
  */
-public class LocaleTest extends AbstractJUnit5RunnerTests {
+public class LocaleTest {
 
     @Test
     void locale() {
