@@ -46,10 +46,12 @@ public class ClientExceptionHandler {
         }
 
         ConstraintViolation<?> first = violations.stream().findFirst().get();
-        ResponseError error = new ResponseError(appProperties.getName(), ApiErrorCode.GLOBAL_CLIENT_ERROR, first.getMessage());
+        ResponseError error = new ResponseError(appProperties.getName(), ApiErrorCode.GLOBAL_CLIENT_ERROR,
+                first.getPropertyPath() + first.getMessage());
 
         List<ResponseError.BusinessError> errors = violations.stream()
-                .map(vio -> new ResponseError.BusinessError(ApiErrorCode.GLOBAL_CLIENT_ERROR, vio.getMessage()))
+                .map(vio -> new ResponseError.BusinessError(ApiErrorCode.GLOBAL_CLIENT_ERROR,
+                        vio.getPropertyPath() + vio.getMessage()))
                 .collect(Collectors.toList());
 
         error.setErrors(errors);
