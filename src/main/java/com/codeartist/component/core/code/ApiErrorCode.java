@@ -11,17 +11,13 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ApiErrorCode implements MessageCode {
+public enum ApiErrorCode implements ErrorCode {
 
-    GLOBAL_EXPIRED_TOKEN_ERROR(100001, "global.expired.token.error"),
-    GLOBAL_CLIENT_ERROR(100002, "global.client.error"),
-    GLOBAL_BUSINESS_ERROR(100003, "global.business.error"),
-    GLOBAL_SERVICE_BUSY_ERROR(100004, "global.service.busy.error"),
-    GLOBAL_SERVICE_ERROR(100005, "global.service.error"),
-    GLOBAL_CAPTCHA_EXPIRE(100006, "global.captcha.expire"),
-    GLOBAL_CAPTCHA_ERROR(100007, "global.captcha.error"),
-    ;
-
-    private final int code;
-    private final String messageCode;
+    GLOBAL_EXPIRED_TOKEN_ERROR,
+    GLOBAL_CLIENT_ERROR,
+    GLOBAL_BUSINESS_ERROR,
+    GLOBAL_SERVICE_BUSY_ERROR,
+    GLOBAL_SERVICE_ERROR,
+    GLOBAL_CAPTCHA_EXPIRE,
+    GLOBAL_CAPTCHA_ERROR,
 }

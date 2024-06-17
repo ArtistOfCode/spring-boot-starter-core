@@ -1,6 +1,5 @@
 package com.codeartist.component.core;
 
-import com.codeartist.component.core.exception.BadRequestException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.*;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -9,12 +8,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.util.CollectionUtils;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -116,24 +111,18 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
     // Validator
 
     public static <T> void validate(T object, Class<?>... groups) {
-        handlerValidate(validator.validate(object, groups));
+        Set<ConstraintViolation<T>> violations = validator.validate(object, groups);
+        throw new ConstraintViolationException(violations);
     }
 
     public static <T> void validateProperty(T object, String propertyName, Class<?>... groups) {
-        handlerValidate(validator.validateProperty(object, propertyName, groups));
+        Set<ConstraintViolation<T>> violations = validator.validateProperty(object, propertyName, groups);
+        throw new ConstraintViolationException(violations);
     }
 
     public static <T> void validateValue(Class<T> beanType, String propertyName, Object value, Class<?>... groups) {
-        handlerValidate(validator.validateValue(beanType, propertyName, value, groups));
-    }
-
-    private static <T> void handlerValidate(Set<ConstraintViolation<T>> violations) {
-        if (CollectionUtils.isEmpty(violations)) {
-            return;
-        }
-        ConstraintViolation<T> violation = violations.iterator().next();
-        String field = violation.getPropertyPath().toString();
-        throw new BadRequestException(field + " " + violation.getMessage());
+        Set<ConstraintViolation<T>> violations = validator.validateValue(beanType, propertyName, value, groups);
+        throw new ConstraintViolationException(violations);
     }
 
     // Message

@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.codeartist.component.core.SpringContext;
 import com.codeartist.component.core.entity.Relation;
-import com.codeartist.component.core.exception.BadRequestException;
-import com.codeartist.component.core.util.Assert;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,7 +64,7 @@ public abstract class AbstrartRelationService<D> implements RelationService {
     }
 
     private void checkId(Long id) {
-        Assert.notNull(id, () -> new BadRequestException("Id must not null."));
+        Assert.notNull(id, "Id must not null.");
     }
 
     private void checkParam(Relation param) {

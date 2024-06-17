@@ -1,14 +1,10 @@
 package com.codeartist.component.core.entity;
 
-import com.codeartist.component.core.SpringContext;
-import com.codeartist.component.core.code.MessageCode;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * HTTP 接口响应异常实体
@@ -21,7 +17,7 @@ import java.util.stream.Collectors;
 public class ResponseError {
 
     private String service;
-    private int code;
+    private String code;
     private String message;
     private String stackTrace;
     private List<BusinessError> errors;
@@ -29,32 +25,47 @@ public class ResponseError {
     public ResponseError() {
     }
 
-    public ResponseError(String service, int code, String message) {
+    public ResponseError(String service, Enum<?> code, String message) {
         this(service, code, message, null);
     }
 
-    public ResponseError(String service, int code, String message, String stackTrace) {
+    public ResponseError(String service, Enum<?> code, String message, String stackTrace) {
+        this(service, code, message, stackTrace, Collections.emptyList());
+    }
+
+    public ResponseError(String service, Enum<?> code, String message, String stackTrace, List<BusinessError> errors) {
+        this(service, code.name(), message, stackTrace, errors);
+    }
+
+    public ResponseError(String service, String code, String message) {
+        this(service, code, message, null);
+    }
+
+    public ResponseError(String service, String code, String message, String stackTrace) {
+        this(service, code, message, stackTrace, Collections.emptyList());
+    }
+
+    public ResponseError(String service, String code, String message, String stackTrace, List<BusinessError> errors) {
         this.service = service;
         this.code = code;
         this.message = message;
         this.stackTrace = stackTrace;
-    }
-
-    public void setErrors(List<MessageCode> messageCodeList) {
-        if (messageCodeList == null) {
-            return;
-        }
-        this.errors = messageCodeList.stream()
-                .map(m -> new BusinessError(m.getCode(), SpringContext.getMessage(m)))
-                .collect(Collectors.toList());
+        this.errors = errors;
     }
 
     @Getter
     @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class BusinessError {
-        private int code;
+        private String code;
         private String message;
+
+        public BusinessError(Enum<?> code, String message) {
+            this(code.name(), message);
+        }
+
+        public BusinessError(String code, String message) {
+            this.code = code;
+            this.message = message;
+        }
     }
 }

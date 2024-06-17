@@ -5,22 +5,22 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.codeartist.component.core.SpringContext;
-import com.codeartist.component.core.code.ApiErrorCode;
-import com.codeartist.component.core.code.MessageCode;
 import com.codeartist.component.core.entity.PageInfo;
 import com.codeartist.component.core.entity.PageParam;
 import com.codeartist.component.core.entity.event.EntityDeleteEvent;
 import com.codeartist.component.core.entity.event.EntitySaveEvent;
 import com.codeartist.component.core.entity.event.EntityUpdateEvent;
 import com.codeartist.component.core.exception.BadRequestException;
+import com.codeartist.component.core.exception.BusinessException;
 import com.codeartist.component.core.support.auth.AuthContext;
-import com.codeartist.component.core.util.Assert;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StopWatch;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
 
     @Override
     public R get(Long id) {
-        Assert.notNull(id, () -> new BadRequestException("ID不能为空"));
+        Assert.notNull(id, "ID不能为空");
 
         D entity = getMapper().selectById(id);
         return getConverter().toVo(entity);
@@ -135,7 +135,7 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
         context.setOldEntity(old);
 
         if (old == null) {
-            throw new BadRequestException("更新记录不存在");
+            throw BadRequestException.of("更新记录不存在");
         }
         p.setUpdateUser(userId);
 
@@ -153,18 +153,10 @@ public abstract class AbstractService<D, R, P extends PageParam> implements Base
     private void doFinally(EntityContext<P, D> context) {
         context.clear();
 
-        List<MessageCode> clientErrors = context.getErrorResolver().getClientErrors();
-        List<MessageCode> errors = context.getErrorResolver().getErrors();
+        List<ObjectError> allErrors = context.getErrors().getAllErrors();
 
-        if (!CollectionUtils.isEmpty(clientErrors)) {
-            BadRequestException clientException = new BadRequestException(ApiErrorCode.GLOBAL_CLIENT_ERROR);
-            clientException.setBusinessMessage(clientErrors);
-            throw clientException;
-        }
-        if (!CollectionUtils.isEmpty(errors)) {
-            BadRequestException exception = new BadRequestException(ApiErrorCode.GLOBAL_BUSINESS_ERROR);
-            exception.setBusinessMessage(errors);
-            throw exception;
+        if (!CollectionUtils.isEmpty(allErrors)) {
+            throw new BusinessException(context.getErrors());
         }
     }
 

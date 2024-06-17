@@ -1,6 +1,6 @@
 package com.codeartist.component.core.support.curd;
 
-import com.codeartist.component.core.code.ErrorResolver;
+import org.springframework.validation.BindingResult;
 
 /**
  * 实体操作上下文
@@ -34,7 +34,7 @@ public interface EntityContext<P, D> {
 
     void setOldEntity(D entity);
 
-    ErrorResolver getErrorResolver();
+    BindingResult getErrors();
 
     default void clear() {
         setSave(false);

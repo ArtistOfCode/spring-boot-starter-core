@@ -1,9 +1,9 @@
 package com.codeartist.component.core.support.auth;
 
 import com.codeartist.component.core.entity.enums.Constants;
-import com.codeartist.component.core.util.Assert;
 import com.codeartist.component.core.util.WebUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Assert;
 
 /**
  * 默认权限上下文实现

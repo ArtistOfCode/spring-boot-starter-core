@@ -1,8 +1,8 @@
 package com.codeartist.component.core.support.curd;
 
-import com.codeartist.component.core.code.DefaultErrorResolver;
-import com.codeartist.component.core.code.ErrorResolver;
 import lombok.Data;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 
 /**
  * 实体操作上下文默认实现
@@ -19,9 +19,9 @@ public class DefaultEntityContext<P, D> implements EntityContext<P, D> {
     private P param;
     private D entity;
     private D oldEntity;
-    private ErrorResolver errorResolver;
+    private BindingResult errors;
 
     public DefaultEntityContext() {
-        this.errorResolver = new DefaultErrorResolver();
+        this.errors = new BeanPropertyBindingResult(param, param.getClass().getName());
     }
 }

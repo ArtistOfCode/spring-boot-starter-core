@@ -3,19 +3,17 @@ package com.codeartist.component.core.code;
 import org.springframework.context.MessageSourceResolvable;
 
 /**
- * 错误码接口
+ * 自定义错误码接口
  *
  * @author AiJiangnan
- * @date 2020/9/11
+ * @date 2024/6/17
  */
-public interface MessageCode extends MessageSourceResolvable {
+public interface ErrorCode extends MessageSourceResolvable {
 
-    int getCode();
-
-    String getMessageCode();
+    String name();
 
     @Override
     default String[] getCodes() {
-        return new String[]{getMessageCode()};
+        return new String[]{name()};
     }
 }

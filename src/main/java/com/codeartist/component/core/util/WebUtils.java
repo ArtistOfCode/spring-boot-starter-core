@@ -1,6 +1,5 @@
 package com.codeartist.component.core.util;
 
-import com.codeartist.component.core.exception.BusinessException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -50,14 +49,14 @@ public final class WebUtils {
         return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
                 .map(att -> (ServletRequestAttributes) att)
                 .map(ServletRequestAttributes::getRequest)
-                .orElseThrow(() -> new BusinessException("Request info error."));
+                .orElseThrow(() -> new IllegalStateException("Request info error."));
     }
 
     public static HttpServletResponse getResponse() {
         return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
                 .map(att -> (ServletRequestAttributes) att)
                 .map(ServletRequestAttributes::getResponse)
-                .orElseThrow(() -> new BusinessException("Response info error."));
+                .orElseThrow(() -> new IllegalStateException("Response info error."));
     }
 
     public static String getRequestHeader(String key) {
