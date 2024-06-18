@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.*;
 import java.util.Locale;
@@ -112,16 +113,25 @@ public final class SpringContext implements EnvironmentAware, ApplicationContext
 
     public static <T> void validate(T object, Class<?>... groups) {
         Set<ConstraintViolation<T>> violations = validator.validate(object, groups);
+        if (CollectionUtils.isEmpty(violations)) {
+            return;
+        }
         throw new ConstraintViolationException(violations);
     }
 
     public static <T> void validateProperty(T object, String propertyName, Class<?>... groups) {
         Set<ConstraintViolation<T>> violations = validator.validateProperty(object, propertyName, groups);
+        if (CollectionUtils.isEmpty(violations)) {
+            return;
+        }
         throw new ConstraintViolationException(violations);
     }
 
     public static <T> void validateValue(Class<T> beanType, String propertyName, Object value, Class<?>... groups) {
         Set<ConstraintViolation<T>> violations = validator.validateValue(beanType, propertyName, value, groups);
+        if (CollectionUtils.isEmpty(violations)) {
+            return;
+        }
         throw new ConstraintViolationException(violations);
     }
 
