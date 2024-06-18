@@ -22,6 +22,6 @@ public class DefaultEntityContext<P, D> implements EntityContext<P, D> {
     private BindingResult errors;
 
     public DefaultEntityContext() {
-        this.errors = new BeanPropertyBindingResult(param, param.getClass().getName());
+        this.errors = new BeanPropertyBindingResult(this, getClass().getName());
     }
 }
